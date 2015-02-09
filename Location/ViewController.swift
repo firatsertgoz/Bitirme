@@ -2,9 +2,11 @@
 
 import UIKit
 import CoreLocation
+import AVFoundation
 
 
-class ViewController: UIViewController {
+class ViewController: UIViewController , AVCaptureMetadataOutputObjectsDelegate
+ {
     
     //region coordinates knwon
     //1den fazla adam, clustered bir sekilde mi duruyorlar
@@ -15,6 +17,10 @@ class ViewController: UIViewController {
     
     
     //siniftaysan app'i ac
+    
+    var captureSession:AVCaptureSession?
+    var videoPreviewLayer:AVCaptureVideoPreviewLayer?
+    var qrCodeFrameView:UIView?
     
     @IBOutlet weak var textLabel: UILabel!
     
@@ -29,6 +35,24 @@ class ViewController: UIViewController {
         }()
     
     override func viewDidLoad() {
+        // Get an instance of the AVCaptureDevice class to initialize a device object and provide the video
+        // as the media type parameter.
+        let captureDevice = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
+        
+        // Get an instance of the AVCaptureDeviceInput class using the previous device object.
+        var error:NSError?
+        let input: AnyObject! = AVCaptureDeviceInput.deviceInputWithDevice(captureDevice, error: &error)
+        
+        if (error != nil) {
+            // If any error occurs, simply log the description of it and don't continue any more.
+            println("\(error?.localizedDescription)")
+            return
+        }
+        
+        // Initialize the captureSession object.
+        captureSession = AVCaptureSession()
+        // Set the input device on the capture session.
+        captureSession?.addInput(input as AVCaptureInput)
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.manager.delegate = self.locationDelegate
