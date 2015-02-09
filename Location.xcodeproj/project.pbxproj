@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7161700C1A895C53004CF6F7 /* HTTPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7161700B1A895C53004CF6F7 /* HTTPHelper.swift */; };
+		7161700E1A895E51004CF6F7 /* KeyChainAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7161700D1A895E51004CF6F7 /* KeyChainAccess.swift */; };
 		F11845921A2B42FF005B5DAC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11845911A2B42FF005B5DAC /* AppDelegate.swift */; };
 		F11845941A2B42FF005B5DAC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11845931A2B42FF005B5DAC /* ViewController.swift */; };
 		F11845971A2B42FF005B5DAC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F11845951A2B42FF005B5DAC /* Main.storyboard */; };
@@ -30,6 +32,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7161700B1A895C53004CF6F7 /* HTTPHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPHelper.swift; sourceTree = "<group>"; };
+		7161700D1A895E51004CF6F7 /* KeyChainAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyChainAccess.swift; sourceTree = "<group>"; };
 		F118458C1A2B42FF005B5DAC /* Location.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Location.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F11845901A2B42FF005B5DAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F11845911A2B42FF005B5DAC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -93,6 +97,8 @@
 				F118459A1A2B42FF005B5DAC /* LaunchScreen.xib */,
 				F118458F1A2B42FF005B5DAC /* Supporting Files */,
 				F1C1FEC71A2B75840095C80F /* LocationDelegate.swift */,
+				7161700B1A895C53004CF6F7 /* HTTPHelper.swift */,
+				7161700D1A895E51004CF6F7 /* KeyChainAccess.swift */,
 			);
 			path = Location;
 			sourceTree = "<group>";
@@ -233,9 +239,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				F11845941A2B42FF005B5DAC /* ViewController.swift in Sources */,
+				7161700C1A895C53004CF6F7 /* HTTPHelper.swift in Sources */,
 				F173A4C71A88DB79008524A3 /* ReaderView.swift in Sources */,
 				F1C1FEC81A2B75840095C80F /* LocationDelegate.swift in Sources */,
 				F173A4C61A88DB79008524A3 /* QRCodeReader.swift in Sources */,
+				7161700E1A895E51004CF6F7 /* KeyChainAccess.swift in Sources */,
 				F173A4C81A88DB79008524A3 /* SwitchCameraButton.swift in Sources */,
 				F11845921A2B42FF005B5DAC /* AppDelegate.swift in Sources */,
 			);
