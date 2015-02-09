@@ -2,10 +2,8 @@
 
 import UIKit
 import CoreLocation
-import AVFoundation
 
-
-class ViewController: UIViewController , AVCaptureMetadataOutputObjectsDelegate
+class ViewController: UIViewController,QRCodeReaderDelegate
  {
     
     //region coordinates knwon
@@ -18,9 +16,32 @@ class ViewController: UIViewController , AVCaptureMetadataOutputObjectsDelegate
     
     //siniftaysan app'i ac
     
-    var captureSession:AVCaptureSession?
-    var videoPreviewLayer:AVCaptureVideoPreviewLayer?
-    var qrCodeFrameView:UIView?
+    lazy var reader: QRCodeReader = QRCodeReader(cancelButtonTitle: "Cancel")
+    
+    // MARK: - QRCodeReader Delegate Methods
+    
+    func reader(reader: QRCodeReader, didScanResult result: String) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func readerDidCancel(reader: QRCodeReader) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+        
+    }
+    
+    @IBAction func scanAction(sender: AnyObject) {
+        reader.modalPresentationStyle = .FormSheet
+        reader.delegate               = self
+        
+        reader.completionBlock = { (result: String?) in
+            println(result)
+        }
+        
+        presentViewController(reader, animated: true, completion: nil)
+    }
+    
+    
+    
     
     @IBOutlet weak var textLabel: UILabel!
     
@@ -35,29 +56,17 @@ class ViewController: UIViewController , AVCaptureMetadataOutputObjectsDelegate
         }()
     
     override func viewDidLoad() {
-        // Get an instance of the AVCaptureDevice class to initialize a device object and provide the video
-        // as the media type parameter.
-        let captureDevice = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
         
-        // Get an instance of the AVCaptureDeviceInput class using the previous device object.
-        var error:NSError?
-        let input: AnyObject! = AVCaptureDeviceInput.deviceInputWithDevice(captureDevice, error: &error)
         
-        if (error != nil) {
-            // If any error occurs, simply log the description of it and don't continue any more.
-            println("\(error?.localizedDescription)")
-            return
-        }
         
-        // Initialize the captureSession object.
-        captureSession = AVCaptureSession()
-        // Set the input device on the capture session.
-        captureSession?.addInput(input as AVCaptureInput)
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.manager.delegate = self.locationDelegate
         self.locationDelegate.registerViewController(self)
         self.manager.requestAlwaysAuthorization()
+        
+        
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -74,7 +83,6 @@ class ViewController: UIViewController , AVCaptureMetadataOutputObjectsDelegate
             self.manager.startMonitoringVisits()
             self.manager.stopMonitoringVisits()
             self.manager.startUpdatingLocation()
-            println(self.manager.delegate.debugDescription)
             
         }
     }
