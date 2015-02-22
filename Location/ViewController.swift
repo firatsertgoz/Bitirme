@@ -41,7 +41,7 @@ class ViewController: UIViewController,QRCodeReaderDelegate
     }
     
     
-    
+    let httpHelper = HTTPHelper()
     
     @IBOutlet weak var textLabel: UILabel!
     
@@ -64,6 +64,24 @@ class ViewController: UIViewController,QRCodeReaderDelegate
         self.manager.delegate = self.locationDelegate
         self.locationDelegate.registerViewController(self)
         self.manager.requestAlwaysAuthorization()
+        
+        // HTTP Request
+        let httpRequest = httpHelper.buildRequest("get_user?email=bcanvural@sabanciuniv.edu", method: "GET", authType: HTTPRequestAuthType.HTTPTokenAuth)
+        let userEmail = "bcanvural@sabanciuniv.edu"
+        let userID = "1"
+        httpRequest.HTTPBody = "".dataUsingEncoding(NSUTF8StringEncoding)
+        //httpRequest.HTTPBody = "{\"email\":\"\(userEmail)\"}".dataUsingEncoding(NSUTF8StringEncoding);
+        
+        httpHelper.sendRequest(httpRequest, completion: { (data:NSData!, error:NSError!) -> Void in
+            //display error
+            if error != nil {
+                let errorMessage = self.httpHelper.getErrorMessage(error)
+                println(errorMessage)
+            }
+            else {
+               println( NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers, error: nil))
+            }
+        })
         
         
         
