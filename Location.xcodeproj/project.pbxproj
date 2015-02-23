@@ -413,8 +413,8 @@
 				INFOPLIST_FILE = Location/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/bcanvural/Desktop/Bitirme/Location/AES-Bridging-Header.h";
-				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "/Users/bcanvural/Desktop/Bitirme/Location/AES-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/firat/Documents/Developer/Bitirme/Location/AES-Bridging-Header.h";
+				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "/Users/firat/Documents/Developer/Bitirme/Location/AES-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -425,8 +425,8 @@
 				INFOPLIST_FILE = Location/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/bcanvural/Desktop/Bitirme/Location/AES-Bridging-Header.h";
-				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "/Users/bcanvural/Desktop/Bitirme/Location/AES-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/firat/Documents/Developer/Bitirme/Location/AES-Bridging-Header.h";
+				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "/Users/firat/Documents/Developer/Bitirme/Location/AES-Bridging-Header.h";
 			};
 			name = Release;
 		};

@@ -90,16 +90,17 @@ class LogInViewController: UIViewController {
             var stopBool : Bool
             
             // save API AuthToken and ExpiryDate in Keychain
-            //self.saveApiTokenInKeychain(responseDict)
+            self.saveApiTokenInKeychain(responseDict)
+            
         })
     }
     
     func saveApiTokenInKeychain(tokenDict:NSDictionary) {
         // Store API AuthToken and AuthToken expiry date in KeyChain
         tokenDict.enumerateKeysAndObjectsUsingBlock({ (dictKey, dictObj, stopBool) -> Void in
-            var myKey = dictKey as NSString
-            var myObj = dictObj as NSString
-            
+            var myKey = dictKey.description
+            var myObj = dictObj.description
+            println(myKey+" "+myObj)
             if myKey == "api_authtoken" {
                 KeychainAccess.setPassword(myObj, account: "Auth_Token", service: "KeyChainService")
             }
@@ -108,8 +109,8 @@ class LogInViewController: UIViewController {
                 KeychainAccess.setPassword(myObj, account: "Auth_Token_Expiry", service: "KeyChainService")
             }
         })
-        
-        //self.dismissViewControllerAnimated(true, completion: nil)
+        let afterLogin = self.storyboard?.instantiateViewControllerWithIdentifier("afterLogin") as ViewController
+        self.navigationController!.pushViewController(afterLogin, animated: true)
     }
     
     func displayAlertMessage(alertTitle:NSString, alertDescription:NSString) -> Void {
