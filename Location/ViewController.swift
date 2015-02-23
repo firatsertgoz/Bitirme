@@ -4,7 +4,7 @@ import UIKit
 import CoreLocation
 
 class ViewController: UIViewController,QRCodeReaderDelegate
- {
+{
     
     //region coordinates knwon
     //1den fazla adam, clustered bir sekilde mi duruyorlar
@@ -65,12 +65,22 @@ class ViewController: UIViewController,QRCodeReaderDelegate
         self.locationDelegate.registerViewController(self)
         self.manager.requestAlwaysAuthorization()
         
+        self.getCourses()
+        
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    
+    func getCourses(){
+        
         // HTTP Request
-        let httpRequest = httpHelper.buildRequest("get_user?email=bcanvural@sabanciuniv.edu", method: "GET", authType: HTTPRequestAuthType.HTTPTokenAuth)
-        let userEmail = "bcanvural@sabanciuniv.edu"
-        let userID = "1"
+        let httpRequest = httpHelper.buildRequest("get_courses", method: "GET", authType: HTTPRequestAuthType.HTTPTokenAuth)
+        
         httpRequest.HTTPBody = "".dataUsingEncoding(NSUTF8StringEncoding)
-        //httpRequest.HTTPBody = "{\"email\":\"\(userEmail)\"}".dataUsingEncoding(NSUTF8StringEncoding);
         
         httpHelper.sendRequest(httpRequest, completion: { (data:NSData!, error:NSError!) -> Void in
             //display error
@@ -79,18 +89,14 @@ class ViewController: UIViewController,QRCodeReaderDelegate
                 println(errorMessage)
             }
             else {
-               println( NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers, error: nil))
+                println( NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers, error: nil))
             }
         })
         
-        
-        
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+    
+    
     
     
     @IBAction func goButton(sender: AnyObject) {
