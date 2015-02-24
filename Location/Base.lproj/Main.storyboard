@@ -252,8 +252,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="qzx-rE-hf7">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="qzx-rE-hf7">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="642"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="TAb-R8-qFV">
@@ -278,6 +278,12 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottomMargin" secondItem="qzx-rE-hf7" secondAttribute="bottom" constant="-74" id="5V5-Or-rsp"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="qzx-rE-hf7" secondAttribute="trailing" constant="-16" id="Eb8-GE-OMe"/>
+                            <constraint firstItem="qzx-rE-hf7" firstAttribute="top" secondItem="9Dz-o8-bzA" secondAttribute="topMargin" id="SLy-f0-Xgg"/>
+                            <constraint firstItem="qzx-rE-hf7" firstAttribute="leading" secondItem="9Dz-o8-bzA" secondAttribute="leadingMargin" constant="-16" id="vlR-lU-n0i"/>
+                        </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
