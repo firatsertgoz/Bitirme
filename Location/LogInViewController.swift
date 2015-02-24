@@ -6,10 +6,7 @@ import UIKit
 class LogInViewController: UIViewController {
     
     let httpHelper = HTTPHelper()
-    
-    
-    
-    
+    var courseDict:NSDictionary = NSDictionary()
     
     @IBOutlet weak var emailTextField: UITextField!
     
@@ -91,7 +88,7 @@ class LogInViewController: UIViewController {
             
             // save API AuthToken and ExpiryDate in Keychain
             self.saveApiTokenInKeychain(responseDict)
-            
+            self.segueToCourseListViewController()
         })
     }
     
@@ -109,8 +106,6 @@ class LogInViewController: UIViewController {
                 KeychainAccess.setPassword(myObj, account: "Auth_Token_Expiry", service: "KeyChainService")
             }
         })
-        let afterLogin = self.storyboard?.instantiateViewControllerWithIdentifier("afterLogin") as ViewController
-        self.navigationController!.pushViewController(afterLogin, animated: true)
     }
     
     func displayAlertMessage(alertTitle:NSString, alertDescription:NSString) -> Void {
@@ -119,7 +114,11 @@ class LogInViewController: UIViewController {
         let errorAlert = UIAlertView(title:alertTitle, message:alertDescription, delegate:nil, cancelButtonTitle:"OK")
         errorAlert.show()
     }
-    
+        func segueToCourseListViewController()
+    {
+        let afterLogin = self.storyboard?.instantiateViewControllerWithIdentifier("afterLogin") as CourseListViewController
+        self.navigationController!.pushViewController(afterLogin, animated: true)
+    }
 
     /*
     // MARK: - Navigation
@@ -130,5 +129,4 @@ class LogInViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
 }

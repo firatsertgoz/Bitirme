@@ -65,7 +65,7 @@ class ViewController: UIViewController,QRCodeReaderDelegate
         self.locationDelegate.registerViewController(self)
         self.manager.requestAlwaysAuthorization()
         
-        self.getCourses()
+        //self.getCourses()
         
     }
     
@@ -74,26 +74,6 @@ class ViewController: UIViewController,QRCodeReaderDelegate
         // Dispose of any resources that can be recreated.
     }
     
-    
-    func getCourses(){
-        
-        // HTTP Request
-        let httpRequest = httpHelper.buildRequest("get_courses", method: "GET", authType: HTTPRequestAuthType.HTTPTokenAuth)
-        
-        httpRequest.HTTPBody = "".dataUsingEncoding(NSUTF8StringEncoding)
-        
-        httpHelper.sendRequest(httpRequest, completion: { (data:NSData!, error:NSError!) -> Void in
-            //display error
-            if error != nil {
-                let errorMessage = self.httpHelper.getErrorMessage(error)
-                println(errorMessage)
-            }
-            else {
-                println( NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers, error: nil))
-            }
-        })
-        
-    }
     
     
     
