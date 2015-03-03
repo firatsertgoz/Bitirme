@@ -42,10 +42,22 @@ class LogInViewController: UIViewController {
         
         
     }
-  
-
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        
+        self.view.endEditing(true)
+        
+    }
+    
+    func textFieldShouldReturn(textField: UITextField!) -> Bool {
+        
+        passwordTextField.resignFirstResponder()
+        return true
+        
+    }
+    
     @IBAction func signupPressed(sender: AnyObject) {
         
+
     }
    
     

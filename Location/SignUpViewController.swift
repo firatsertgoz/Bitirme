@@ -15,6 +15,7 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var nameTextField: UITextField!
+    
     @IBAction func signUpPressed(sender: AnyObject) {
         
         // Code to hide the keyboards for text fields
@@ -42,6 +43,11 @@ class SignUpViewController: UIViewController {
             self.displayAlertMessage("Parameters Required", alertDescription:
                 "Some of the required parameters are missing")
         }
+        
+    }
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        
+        self.view.endEditing(true)
         
     }
     
@@ -79,6 +85,9 @@ class SignUpViewController: UIViewController {
         errorAlert.show()
     }
     override func viewDidLoad() {
+        var leftSwipe = UISwipeGestureRecognizer(target: self, action: Selector("handleSwipes:"))
+        leftSwipe.direction = .Left
+        view.addGestureRecognizer(leftSwipe)
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
