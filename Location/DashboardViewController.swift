@@ -14,6 +14,7 @@ class DashboardViewController: UIViewController,UITableViewDelegate {
     var receivedJSON = JSON([])
     let httpHelper = HTTPHelper()
     var json = JSON([])
+    var selectedCourseId : Int?
     
     
     @IBAction func createPressed(sender: AnyObject) {
@@ -24,7 +25,6 @@ class DashboardViewController: UIViewController,UITableViewDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         println(self.receivedJSON)
-        tableView.registerClass(CustomTableViewCell.self, forCellReuseIdentifier: "InstructorCell")
         getCourses()
     }
     
@@ -42,8 +42,7 @@ class DashboardViewController: UIViewController,UITableViewDelegate {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-//        let cell = UITableView(style: UITableViewCellStyle.Default, reuseIdentifier: "InstructorCell") as CustomTableViewCell
-        let cell = tableView.dequeueReusableCellWithIdentifier("InstructorCell", forIndexPath: indexPath) as CustomTableViewCell
+        let cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "InstructorCell") as UITableViewCell
         cell.selectionStyle = .None //don't highlight when selected
         cell.textLabel?.text = self.json[indexPath.row]["name"].description
         return cell
@@ -124,15 +123,27 @@ class DashboardViewController: UIViewController,UITableViewDelegate {
             
         })
     }
-
-    /*
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let targetView = self.storyboard?.instantiateViewControllerWithIdentifier("DetailedDashboard") as DetailedDashboardViewController
+        self.selectedCourseId = self.json[indexPath.row]["id"].int!
+        println("Json is:\n \(self.json.string)")
+        println("selectedCourseId is \(self.selectedCourseId)")
+        
+        self.performSegueWithIdentifier("DashboardToDetailed", sender: self)
+    }
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        if (segue.identifier == "DashboardToDetailed") {
+            let destinationVIew = segue.destinationViewController as DetailedDashboardViewController
+            destinationVIew.courseId = self.selectedCourseId!
+        }
     }
-    */
-
 }
