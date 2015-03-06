@@ -21,8 +21,8 @@ enum HTTPRequestContentType {
 struct HTTPHelper {
     static let API_AUTH_NAME = "BITIRME"
     static let API_AUTH_PASSWORD = "yrfafyqteweaqsddteefqddqfwrtysfrqreqqeafyrtssftayrsrrqetytyeefqr"
-    static let BASE_URL = "https://gentle-stream-7806.herokuapp.com/api"
-   // static let BASE_URL = "http://127.0.0.1:3000/api"
+    //static let BASE_URL = "https://gentle-stream-7806.herokuapp.com/api"
+    static let BASE_URL = "http://127.0.0.1:3000/api"
     
     func buildRequest(path: String!, method: String, authType: HTTPRequestAuthType,
         requestContentType: HTTPRequestContentType = HTTPRequestContentType.HTTPJsonContent, requestBoundary:NSString = "") -> NSMutableURLRequest {

@@ -7,13 +7,14 @@ class LogInViewController: UIViewController {
     
     let httpHelper = HTTPHelper()
     var courseDict:NSDictionary = NSDictionary()
+    var jsonData : JSON?
     
     @IBOutlet weak var emailTextField: UITextField!
     
     
     
     @IBOutlet weak var passwordTextField: UITextField!
-
+    
     
     
     @IBAction func loginPressed(sender: AnyObject) {
@@ -57,16 +58,15 @@ class LogInViewController: UIViewController {
     
     @IBAction func signupPressed(sender: AnyObject) {
         
-
+        
     }
-   
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -90,8 +90,8 @@ class LogInViewController: UIViewController {
             }
             
             // hide activity indicator and update userLoggedInFlag
-           // self.activityIndicatorView.hidden = true
-           // self.updateUserLoggedInFlag()
+            // self.activityIndicatorView.hidden = true
+            // self.updateUserLoggedInFlag()
             
             var jsonerror:NSError?
             let responseDict = NSJSONSerialization.JSONObjectWithData(data,
@@ -100,7 +100,9 @@ class LogInViewController: UIViewController {
             
             // save API AuthToken and ExpiryDate in Keychain
             self.saveApiTokenInKeychain(responseDict)
-            self.segueToCourseListViewController()
+            self.jsonData = JSON(data:data) //save json to pass it to the next controller
+            self.toTheNextView()
+            
         })
     }
     
@@ -109,7 +111,7 @@ class LogInViewController: UIViewController {
         tokenDict.enumerateKeysAndObjectsUsingBlock({ (dictKey, dictObj, stopBool) -> Void in
             var myKey = dictKey.description
             var myObj = dictObj.description
-            println(myKey+" "+myObj)
+            
             if myKey == "api_authtoken" {
                 KeychainAccess.setPassword(myObj, account: "Auth_Token", service: "KeyChainService")
             }
@@ -126,19 +128,37 @@ class LogInViewController: UIViewController {
         let errorAlert = UIAlertView(title:alertTitle, message:alertDescription, delegate:nil, cancelButtonTitle:"OK")
         errorAlert.show()
     }
-        func segueToCourseListViewController()
-    {
-        let afterLogin = self.storyboard?.instantiateViewControllerWithIdentifier("afterLogin") as CourseListViewController
-        self.navigationController!.pushViewController(afterLogin, animated: true)
+    
+    func toTheNextView(){
+        //check whether the user is a student or an instructor
+        if (self.jsonData!["instructor"]){
+            //instructor UI
+            self.performSegueWithIdentifier("LoginToDashboard", sender: self)
+        }
+        
+        else if (self.jsonData!["student"]){
+            //student UI
+            self.performSegueWithIdentifier("LoginToCourseList", sender: self)
+        }
+        
     }
-
-    /*
+    
+    
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if (segue.identifier == "LoginToCourseList"){
+            //to the student UI
+            let destinationView = segue.destinationViewController as CourseListViewController
+            destinationView.receivedJSON = self.jsonData!
+        } else if (segue.identifier == "LoginToDashboard"){
+            //to the instructor UI
+            let destinationView = segue.destinationViewController as DashboardViewController
+            destinationView.receivedJSON = self.jsonData!
+        }
+        
     }
-    */
 }

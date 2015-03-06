@@ -11,7 +11,6 @@ class ViewController: UIViewController,QRCodeReaderDelegate
     //gps algoritmalari
     //capi 10m olan bir dairenin icindeler mi
     
-    //implement
     
     
     //siniftaysan app'i ac
