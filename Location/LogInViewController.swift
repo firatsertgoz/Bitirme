@@ -19,6 +19,8 @@ class LogInViewController: UIViewController {
     
     @IBAction func loginPressed(sender: AnyObject) {
         
+        SwiftSpinner.show("Logging in", animated: true)
+        var timer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: Selector("hide"), userInfo: nil, repeats: false)
         // resign the keyboard for text fields
         if self.emailTextField.isFirstResponder() {
             self.emailTextField.resignFirstResponder()
@@ -36,12 +38,16 @@ class LogInViewController: UIViewController {
             countElements(self.passwordTextField.text) > 0 {
                 makeSignInRequest(self.emailTextField.text, userPassword: self.passwordTextField.text)
         } else {
-            self.displayAlertMessage("Parameters Required",
-                alertDescription: "Some of the required parameters are missing")
+            SwiftSpinner.show( "Some of the required parameters are missing", animated: false)
+            var timer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: Selector("hide"), userInfo: nil, repeats: false)
         }
         
         
         
+    }
+    func hide()
+    {
+        SwiftSpinner.hide()
     }
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         
@@ -84,8 +90,9 @@ class LogInViewController: UIViewController {
             // Display error
             if error != nil {
                 let errorMessage = self.httpHelper.getErrorMessage(error)
-                self.displayAlertMessage("Error", alertDescription: errorMessage)
-                
+                //self.displayAlertMessage("Error", alertDescription: errorMessage)
+                SwiftSpinner.show( errorMessage, animated: false)
+                var timer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: Selector("hide"), userInfo: nil, repeats: false)
                 return
             }
             
