@@ -18,6 +18,13 @@ class CourseListViewController: UIViewController, UITableViewDelegate {
         println(self.receivedJSON)
     }
     
+    // Disable navigation bar
+    override func viewWillAppear(animated:Bool){
+        super.viewWillAppear(animated);
+        self.navigationItem.setHidesBackButton(true,animated:false)   //it hides
+        self.navigationItem.title = "Course List"
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

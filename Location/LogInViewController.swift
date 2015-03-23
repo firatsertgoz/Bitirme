@@ -56,15 +56,15 @@ class LogInViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         
-//        let email =  KeychainAccess.passwordForAccount("email", service: "KeyChainService")
-//        let password = KeychainAccess.passwordForAccount("password", service: "KeyChainService")
-//        let auth_token = KeychainAccess.passwordForAccount("Auth_Token", service: "KeyChainService")
-//        
-//        if (email != nil && password != nil && auth_token != nil) {
-//            makeSignInRequest(email!, userPassword: password!)
-//        }
+        self.navigationItem.title = "Login"
         
+        let email =  KeychainAccess.passwordForAccount("email", service: "KeyChainService")
+        let password = KeychainAccess.passwordForAccount("password", service: "KeyChainService")
+        let auth_token = KeychainAccess.passwordForAccount("Auth_Token", service: "KeyChainService")
         
+        if (email != nil && password != nil && auth_token != nil) {
+            makeSignInRequest(email!, userPassword: password!)
+        }
     }
     
     override func viewDidLoad() {
@@ -96,10 +96,6 @@ class LogInViewController: UIViewController {
                 return
             }
             
-            // hide activity indicator and update userLoggedInFlag
-            // self.activityIndicatorView.hidden = true
-            // self.updateUserLoggedInFlag()
-            
             var jsonerror:NSError?
             let responseDict = NSJSONSerialization.JSONObjectWithData(data,
                 options: NSJSONReadingOptions.AllowFragments, error:&jsonerror) as NSDictionary
@@ -130,8 +126,6 @@ class LogInViewController: UIViewController {
                 KeychainAccess.setPassword(myObj, account: "Auth_Token_Expiry", service: "KeyChainService")
             }
         })
-        let auth_token = KeychainAccess.passwordForAccount("Auth_Token")
-        let expiry = KeychainAccess.passwordForAccount("Auth_Token_Expiry")
     }
     
     func displayAlertMessage(alertTitle:NSString, alertDescription:NSString) -> Void {

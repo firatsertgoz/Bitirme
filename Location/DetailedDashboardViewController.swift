@@ -8,9 +8,8 @@
 
 import UIKit
 
-class DetailedDashboardViewController: UIViewController,UITableViewDelegate {
+class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
-    
     var rowNumber = 0;
     let httpHelper = HTTPHelper()
     var courseId : Int!
@@ -18,6 +17,11 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate {
     var jsonToBeSent = JSON([])
     
     @IBOutlet weak var tableView: UITableView!
+    
+    override func viewWillAppear(animated: Bool) {
+        self.navigationItem.title = "Lecture Sessions"
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -40,6 +44,7 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate {
         
         //        let cell = UITableView(style: UITableViewCellStyle.Default, reuseIdentifier: "InstructorCell") as CustomTableViewCell
         let cell = tableView.dequeueReusableCellWithIdentifier("DetailedDashboardCell", forIndexPath: indexPath) as UITableViewCell
+        
         //cell.selectionStyle = .None //don't highlight when selected
         cell.textLabel?.text = self.json[indexPath.row]["created_at"].description
         return cell

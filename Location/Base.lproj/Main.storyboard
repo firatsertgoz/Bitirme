@@ -488,6 +488,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="AZe-td-0OO" customClass="CustomNavigationController" customModule="Location" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="hyc-EG-cGV"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ez1-8V-4KU">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -506,6 +507,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="TPx-F1-7fN"/>
+        <segue reference="4UX-Ko-uVX"/>
     </inferredMetricsTieBreakers>
 </document>

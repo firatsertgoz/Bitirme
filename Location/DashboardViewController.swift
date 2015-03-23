@@ -16,10 +16,17 @@ class DashboardViewController: UIViewController,UITableViewDelegate {
     var json = JSON([])
     var selectedCourseId : Int?
     
+    // Disable navigation bar
+    override func viewWillAppear(animated:Bool){
+    super.viewWillAppear(animated);
+        self.navigationItem.setHidesBackButton(true,animated:false)   //it hides
+        self.navigationItem.title = "Dashboard"
+    }
     
     @IBAction func createPressed(sender: AnyObject) {
         println("Create pressed")
     }
+    
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
