@@ -131,7 +131,9 @@ class DashboardViewController: UIViewController,UITableViewDelegate {
         println("Json is:\n \(self.json.string)")
         println("selectedCourseId is \(self.selectedCourseId)")
         
-        self.performSegueWithIdentifier("DashboardToDetailed", sender: self)
+        let customNav = self.navigationController? as CustomNavigationController
+        customNav.DashboardViewController_selectedCourseId = self.selectedCourseId
+        self.navigationController?.performSegueWithIdentifier("DashboardToDetailed", sender: self)
     }
     
     // MARK: - Navigation
@@ -142,8 +144,10 @@ class DashboardViewController: UIViewController,UITableViewDelegate {
         // Pass the selected object to the new view controller.
         
         if (segue.identifier == "DashboardToDetailed") {
-            let destinationVIew = segue.destinationViewController as DetailedDashboardViewController
-            destinationVIew.courseId = self.selectedCourseId!
+            let navController = segue.destinationViewController as UINavigationController
+            let destinationView = navController.topViewController as DetailedDashboardViewController
+         //   let destinationView = segue.destinationViewController as DetailedDashboardViewController
+            destinationView.courseId = self.selectedCourseId!
         }
     }
 }

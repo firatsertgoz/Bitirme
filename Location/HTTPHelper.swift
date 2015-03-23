@@ -53,7 +53,11 @@ struct HTTPHelper {
                 request.addValue("Basic \(base64EncodedString!)", forHTTPHeaderField: "Authorization")
             case .HTTPTokenAuth:
                 // Retreieve Auth_Token from Keychain
-                let userToken : NSString? = KeychainAccess.passwordForAccount("Auth_Token", service: "KeyChainService")
+                var userToken : NSString? = KeychainAccess.passwordForAccount("Auth_Token", service: "KeyChainService")
+                if userToken == nil {
+                    userToken = ""
+                }
+                
                 // Set Authorization header
                 request.addValue("Token token=\(userToken!)", forHTTPHeaderField: "Authorization")
             }

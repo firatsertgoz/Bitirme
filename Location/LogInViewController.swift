@@ -54,10 +54,21 @@ class LogInViewController: UIViewController {
         
     }
     
+    override func viewWillAppear(animated: Bool) {
+        
+//        let email =  KeychainAccess.passwordForAccount("email", service: "KeyChainService")
+//        let password = KeychainAccess.passwordForAccount("password", service: "KeyChainService")
+//        let auth_token = KeychainAccess.passwordForAccount("Auth_Token", service: "KeyChainService")
+//        
+//        if (email != nil && password != nil && auth_token != nil) {
+//            makeSignInRequest(email!, userPassword: password!)
+//        }
+        
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //KeychainAccess.passwordForAccount("", service: <#String#>)
         
         
     }
@@ -70,10 +81,10 @@ class LogInViewController: UIViewController {
     func makeSignInRequest(userEmail:String, userPassword:String) {
         // Create HTTP request and set request Body
         let httpRequest = httpHelper.buildRequest("signin", method: "POST",
-            authType: HTTPRequestAuthType.HTTPBasicAuth)
+            authType: HTTPRequestAuthType.HTTPTokenAuth)
         let encrypted_password = AESCrypt.encrypt(userPassword, password: HTTPHelper.API_AUTH_PASSWORD)
         
-        httpRequest.HTTPBody = "{\"email\":\"\(self.emailTextField.text)\",\"password\":\"\(encrypted_password)\"}".dataUsingEncoding(NSUTF8StringEncoding);
+        httpRequest.HTTPBody = "{\"email\":\"\(userEmail)\",\"password\":\"\(encrypted_password)\"}".dataUsingEncoding(NSUTF8StringEncoding);
         
         httpHelper.sendRequest(httpRequest, completion: {(data:NSData!, error:NSError!) in
             // Display error
@@ -96,9 +107,12 @@ class LogInViewController: UIViewController {
             
             // save API AuthToken and ExpiryDate in Keychain
             self.saveApiTokenInKeychain(responseDict)
-            self.jsonData = JSON(data:data) //save json to pass it to the next controller
+            // save email and password in Keychain
+            KeychainAccess.setPassword(userPassword, account: "password",service: "KeyChainService")
+            KeychainAccess.setPassword(userEmail, account: "email",service: "KeyChainService")
+            //save json to pass it to the next controller
+            self.jsonData = JSON(data:data) 
             self.toTheNextView()
-            
         })
     }
     
@@ -116,6 +130,8 @@ class LogInViewController: UIViewController {
                 KeychainAccess.setPassword(myObj, account: "Auth_Token_Expiry", service: "KeyChainService")
             }
         })
+        let auth_token = KeychainAccess.passwordForAccount("Auth_Token")
+        let expiry = KeychainAccess.passwordForAccount("Auth_Token_Expiry")
     }
     
     func displayAlertMessage(alertTitle:NSString, alertDescription:NSString) -> Void {
@@ -129,29 +145,16 @@ class LogInViewController: UIViewController {
         //check whether the user is a student or an instructor
         if (self.jsonData!["instructor"]){
             //instructor UI
-            self.performSegueWithIdentifier("LoginToDashboard", sender: self)
+            let navController = self.navigationController? as CustomNavigationController
+            navController.DashboardViewController_receivedJSON = self.jsonData!
+            self.navigationController?.performSegueWithIdentifier("LoginToDashboard", sender: self)
         }
         
         else if (self.jsonData!["student"]){
             //student UI
-            self.performSegueWithIdentifier("LoginToCourseList", sender: self)
-        }
-    }
-    
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-        if (segue.identifier == "LoginToCourseList"){
-            //to the student UI
-            let destinationView = segue.destinationViewController as CourseListViewController
-            destinationView.receivedJSON = self.jsonData!
-        } else if (segue.identifier == "LoginToDashboard"){
-            //to the instructor UI
-            let destinationView = segue.destinationViewController as DashboardViewController
-            destinationView.receivedJSON = self.jsonData!
+            let navController = self.navigationController? as CustomNavigationController
+            navController.CourseListViewController_receivedJSON = self.jsonData!
+            self.navigationController?.performSegueWithIdentifier("LoginToCourseList", sender: self)
         }
     }
 }

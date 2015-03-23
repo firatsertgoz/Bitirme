@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7161700C1A895C53004CF6F7 /* HTTPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7161700B1A895C53004CF6F7 /* HTTPHelper.swift */; };
 		7161700E1A895E51004CF6F7 /* KeyChainAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7161700D1A895E51004CF6F7 /* KeyChainAccess.swift */; };
+		F102EF8A1AC0614D007357C1 /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F102EF891AC0614D007357C1 /* CustomNavigationController.swift */; };
 		F11845921A2B42FF005B5DAC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11845911A2B42FF005B5DAC /* AppDelegate.swift */; };
 		F11845941A2B42FF005B5DAC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11845931A2B42FF005B5DAC /* ViewController.swift */; };
 		F11845971A2B42FF005B5DAC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F11845951A2B42FF005B5DAC /* Main.storyboard */; };
@@ -38,6 +39,7 @@
 		F173A4C71A88DB79008524A3 /* ReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F173A4C41A88DB79008524A3 /* ReaderView.swift */; };
 		F173A4C81A88DB79008524A3 /* SwitchCameraButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F173A4C51A88DB79008524A3 /* SwitchCameraButton.swift */; };
 		F1C1FEC81A2B75840095C80F /* LocationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C1FEC71A2B75840095C80F /* LocationDelegate.swift */; };
+		F1CEA8931AC0367F002986EA /* StudentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1CEA8921AC0367F002986EA /* StudentListViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,7 @@
 /* Begin PBXFileReference section */
 		7161700B1A895C53004CF6F7 /* HTTPHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPHelper.swift; sourceTree = "<group>"; };
 		7161700D1A895E51004CF6F7 /* KeyChainAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyChainAccess.swift; sourceTree = "<group>"; };
+		F102EF891AC0614D007357C1 /* CustomNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
 		F118458C1A2B42FF005B5DAC /* Location.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Location.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F11845901A2B42FF005B5DAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F11845911A2B42FF005B5DAC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -91,6 +94,7 @@
 		F173A4C41A88DB79008524A3 /* ReaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReaderView.swift; sourceTree = "<group>"; };
 		F173A4C51A88DB79008524A3 /* SwitchCameraButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchCameraButton.swift; sourceTree = "<group>"; };
 		F1C1FEC71A2B75840095C80F /* LocationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationDelegate.swift; sourceTree = "<group>"; };
+		F1CEA8921AC0367F002986EA /* StudentListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentListViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +159,8 @@
 				7161700D1A895E51004CF6F7 /* KeyChainAccess.swift */,
 				F11D165B1A9A550D0035330A /* LogInViewController.swift */,
 				F11D166D1A9A63BA0035330A /* SignUpViewController.swift */,
+				F1CEA8921AC0367F002986EA /* StudentListViewController.swift */,
+				F102EF891AC0614D007357C1 /* CustomNavigationController.swift */,
 				F173A4C21A88DB79008524A3 /* QRCodeReader */,
 				F118458F1A2B42FF005B5DAC /* Supporting Files */,
 				F11D165D1A9A5C960035330A /* AESCrypt */,
@@ -320,6 +326,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F102EF8A1AC0614D007357C1 /* CustomNavigationController.swift in Sources */,
 				F11D16691A9A5C960035330A /* NSString+Base64.m in Sources */,
 				F16A42B41AAA606B0028C441 /* CourseListViewController.swift in Sources */,
 				F11845941A2B42FF005B5DAC /* ViewController.swift in Sources */,
@@ -327,6 +334,7 @@
 				F11D16661A9A5C960035330A /* AESCrypt.m in Sources */,
 				F11D16671A9A5C960035330A /* NSData+Base64.m in Sources */,
 				F11D165C1A9A550D0035330A /* LogInViewController.swift in Sources */,
+				F1CEA8931AC0367F002986EA /* StudentListViewController.swift in Sources */,
 				F173A4C71A88DB79008524A3 /* ReaderView.swift in Sources */,
 				F16A42B21AAA604E0028C441 /* SwiftyJSON.swift in Sources */,
 				F16A42AD1AAA60020028C441 /* DashboardViewController.swift in Sources */,
