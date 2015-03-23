@@ -8,17 +8,10 @@ class LogInViewController: UIViewController {
     let httpHelper = HTTPHelper()
     var courseDict:NSDictionary = NSDictionary()
     var jsonData : JSON?
-    
     @IBOutlet weak var emailTextField: UITextField!
-    
-    
-    
     @IBOutlet weak var passwordTextField: UITextField!
     
-    
-    
     @IBAction func loginPressed(sender: AnyObject) {
-        
         SwiftSpinner.show("Logging in", animated: true)
         var timer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: Selector("hide"), userInfo: nil, repeats: false)
         // resign the keyboard for text fields
@@ -38,39 +31,35 @@ class LogInViewController: UIViewController {
             countElements(self.passwordTextField.text) > 0 {
                 makeSignInRequest(self.emailTextField.text, userPassword: self.passwordTextField.text)
         } else {
-            SwiftSpinner.show( "Some of the required parameters are missing", animated: false)
+            SwiftSpinner.show("Some of the required parameters are missing", animated: false)
             var timer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: Selector("hide"), userInfo: nil, repeats: false)
         }
-        
-        
-        
     }
+    
     func hide()
     {
         SwiftSpinner.hide()
     }
+    
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        
         self.view.endEditing(true)
-        
     }
     
     func textFieldShouldReturn(textField: UITextField!) -> Bool {
-        
         passwordTextField.resignFirstResponder()
         return true
-        
     }
     
     @IBAction func signupPressed(sender: AnyObject) {
-        
         
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
+        //KeychainAccess.passwordForAccount("", service: <#String#>)
+        
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -147,9 +136,7 @@ class LogInViewController: UIViewController {
             //student UI
             self.performSegueWithIdentifier("LoginToCourseList", sender: self)
         }
-        
     }
-    
     
     // MARK: - Navigation
     
@@ -166,6 +153,5 @@ class LogInViewController: UIViewController {
             let destinationView = segue.destinationViewController as DashboardViewController
             destinationView.receivedJSON = self.jsonData!
         }
-        
     }
 }

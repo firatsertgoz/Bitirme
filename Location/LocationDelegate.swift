@@ -7,9 +7,15 @@ import CoreLocation
 class LocationDelegate: NSObject, CLLocationManagerDelegate{
     
     var viewController: ViewController?
+    var numOfLocationUpdates = 0;
+    var manager : CLLocationManager!
     
     func registerViewController(controller: ViewController){
         self.viewController = controller
+    }
+    
+    func registerManager(manager : CLLocationManager){
+        self.manager = manager
     }
     
     //protocol functions
@@ -26,7 +32,13 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate{
     */
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
         
-        println("inside didUpdateLocations")
+        println("inside didUpdateLocations,num:\(numOfLocationUpdates)")
+        numOfLocationUpdates++
+        if numOfLocationUpdates==5{
+            println("Now waiting..")
+            self.manager.stopUpdatingLocation()
+           NSTimer.scheduledTimerWithTimeInterval(10, target:self, selector: Selector("restartMonitoring"), userInfo: nil, repeats: false)
+        }
         
         var location = locations[0] as CLLocation
         
@@ -34,6 +46,11 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate{
         println("Longitude: \((location.coordinate.longitude))")
         self.viewController?.textLabel.text = "\((location.coordinate.latitude))" + ", \((location.coordinate.longitude))"
         
+    }
+    
+    func restartMonitoring() {
+        self.numOfLocationUpdates = 0
+        self.manager.startUpdatingLocation()
     }
     
     /*

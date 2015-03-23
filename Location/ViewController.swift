@@ -3,22 +3,12 @@
 import UIKit
 import CoreLocation
 
+
 class ViewController: UIViewController,QRCodeReaderDelegate
 {
-    
-    //region coordinates knwon
-    //1den fazla adam, clustered bir sekilde mi duruyorlar
-    //gps algoritmalari
-    //capi 10m olan bir dairenin icindeler mi
-    
-    
-    
-    //siniftaysan app'i ac
-    
     lazy var reader: QRCodeReader = QRCodeReader(cancelButtonTitle: "Cancel")
     
     // MARK: - QRCodeReader Delegate Methods
-    
     func reader(reader: QRCodeReader, didScanResult result: String) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -39,7 +29,6 @@ class ViewController: UIViewController,QRCodeReaderDelegate
         presentViewController(reader, animated: true, completion: nil)
     }
     
-    
     let httpHelper = HTTPHelper()
     
     @IBOutlet weak var textLabel: UILabel!
@@ -56,16 +45,12 @@ class ViewController: UIViewController,QRCodeReaderDelegate
     
     override func viewDidLoad() {
         
-        
-        
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        self.manager.delegate = self.locationDelegate
+        self.manager.delegate = self.locationDelegate // tell the manager its delegate
+        self.locationDelegate.registerManager(self.manager) //tell the delegate that this is the manager we are working on
         self.locationDelegate.registerViewController(self)
+        self.manager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         self.manager.requestAlwaysAuthorization()
-        
-        //self.getCourses()
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -73,20 +58,10 @@ class ViewController: UIViewController,QRCodeReaderDelegate
         // Dispose of any resources that can be recreated.
     }
     
-    
-    
-    
-    
-    
     @IBAction func goButton(sender: AnyObject) {
-        
         if CLLocationManager.locationServicesEnabled() {
-            
             println("Location services are enabled")
-            self.manager.startMonitoringVisits()
-            self.manager.stopMonitoringVisits()
             self.manager.startUpdatingLocation()
-            
         }
     }
 }

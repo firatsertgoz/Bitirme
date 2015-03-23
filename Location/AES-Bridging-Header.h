@@ -7,5 +7,7 @@
 #import "NSString+Base64.h"
 #import "NSData+CommonCrypto.h"
 #import "NSData+Base64.h"
+#import <BleshSDK/Blesh.h>
+
 
 #endif

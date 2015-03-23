@@ -70,13 +70,10 @@ class SignUpViewController: UIViewController {
                 
                 return
             }
-            
             //self.displaSigninView()
             self.displayAlertMessage("Success", alertDescription: "Account has been created")
-            
         })
     }
-
     
     func displayAlertMessage(alertTitle:NSString, alertDescription:NSString) -> Void {
         // hide activityIndicator view and display alert message

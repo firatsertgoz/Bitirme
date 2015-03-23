@@ -21,6 +21,19 @@
 		F11D16681A9A5C960035330A /* NSData+CommonCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = F11D16631A9A5C960035330A /* NSData+CommonCrypto.m */; };
 		F11D16691A9A5C960035330A /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = F11D16651A9A5C960035330A /* NSString+Base64.m */; };
 		F11D166E1A9A63BA0035330A /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11D166D1A9A63BA0035330A /* SignUpViewController.swift */; };
+		F141158A1ABC869900B0AF2F /* BleshSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F14115891ABC869900B0AF2F /* BleshSDK.framework */; };
+		F14115901ABC86B500B0AF2F /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F141158B1ABC86B500B0AF2F /* Accelerate.framework */; };
+		F14115911ABC86B500B0AF2F /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F141158C1ABC86B500B0AF2F /* AudioToolbox.framework */; };
+		F14115921ABC86B500B0AF2F /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F141158D1ABC86B500B0AF2F /* CoreBluetooth.framework */; };
+		F14115931ABC86B500B0AF2F /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F141158E1ABC86B500B0AF2F /* CoreFoundation.framework */; };
+		F14115941ABC86B500B0AF2F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F141158F1ABC86B500B0AF2F /* SystemConfiguration.framework */; };
+		F14115961ABC86F100B0AF2F /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F14115951ABC86F100B0AF2F /* CoreTelephony.framework */; };
+		F16A42AD1AAA60020028C441 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16A42A91AAA60020028C441 /* DashboardViewController.swift */; };
+		F16A42AE1AAA60020028C441 /* DetailedCourseListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16A42AA1AAA60020028C441 /* DetailedCourseListViewController.swift */; };
+		F16A42AF1AAA60020028C441 /* DetailedDashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16A42AB1AAA60020028C441 /* DetailedDashboardViewController.swift */; };
+		F16A42B01AAA60020028C441 /* SwiftSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16A42AC1AAA60020028C441 /* SwiftSpinner.swift */; };
+		F16A42B21AAA604E0028C441 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16A42B11AAA604E0028C441 /* SwiftyJSON.swift */; };
+		F16A42B41AAA606B0028C441 /* CourseListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16A42B31AAA606B0028C441 /* CourseListViewController.swift */; };
 		F173A4C61A88DB79008524A3 /* QRCodeReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F173A4C31A88DB79008524A3 /* QRCodeReader.swift */; };
 		F173A4C71A88DB79008524A3 /* ReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F173A4C41A88DB79008524A3 /* ReaderView.swift */; };
 		F173A4C81A88DB79008524A3 /* SwitchCameraButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F173A4C51A88DB79008524A3 /* SwitchCameraButton.swift */; };
@@ -61,6 +74,19 @@
 		F11D16651A9A5C960035330A /* NSString+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Base64.m"; sourceTree = "<group>"; };
 		F11D166A1A9A5EEB0035330A /* AES-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AES-Bridging-Header.h"; sourceTree = "<group>"; };
 		F11D166D1A9A63BA0035330A /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		F14115891ABC869900B0AF2F /* BleshSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BleshSDK.framework; path = ../BleshSDK.framework; sourceTree = "<group>"; };
+		F141158B1ABC86B500B0AF2F /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		F141158C1ABC86B500B0AF2F /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		F141158D1ABC86B500B0AF2F /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		F141158E1ABC86B500B0AF2F /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		F141158F1ABC86B500B0AF2F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		F14115951ABC86F100B0AF2F /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		F16A42A91AAA60020028C441 /* DashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
+		F16A42AA1AAA60020028C441 /* DetailedCourseListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailedCourseListViewController.swift; sourceTree = "<group>"; };
+		F16A42AB1AAA60020028C441 /* DetailedDashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailedDashboardViewController.swift; sourceTree = "<group>"; };
+		F16A42AC1AAA60020028C441 /* SwiftSpinner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftSpinner.swift; sourceTree = "<group>"; };
+		F16A42B11AAA604E0028C441 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		F16A42B31AAA606B0028C441 /* CourseListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseListViewController.swift; sourceTree = "<group>"; };
 		F173A4C31A88DB79008524A3 /* QRCodeReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeReader.swift; sourceTree = "<group>"; };
 		F173A4C41A88DB79008524A3 /* ReaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReaderView.swift; sourceTree = "<group>"; };
 		F173A4C51A88DB79008524A3 /* SwitchCameraButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchCameraButton.swift; sourceTree = "<group>"; };
@@ -72,6 +98,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F14115961ABC86F100B0AF2F /* CoreTelephony.framework in Frameworks */,
+				F14115901ABC86B500B0AF2F /* Accelerate.framework in Frameworks */,
+				F14115911ABC86B500B0AF2F /* AudioToolbox.framework in Frameworks */,
+				F14115921ABC86B500B0AF2F /* CoreBluetooth.framework in Frameworks */,
+				F14115931ABC86B500B0AF2F /* CoreFoundation.framework in Frameworks */,
+				F14115941ABC86B500B0AF2F /* SystemConfiguration.framework in Frameworks */,
+				F141158A1ABC869900B0AF2F /* BleshSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,19 +139,25 @@
 		F118458E1A2B42FF005B5DAC /* Location */ = {
 			isa = PBXGroup;
 			children = (
-				F173A4C21A88DB79008524A3 /* QRCodeReader */,
+				F16A42B31AAA606B0028C441 /* CourseListViewController.swift */,
+				F16A42B11AAA604E0028C441 /* SwiftyJSON.swift */,
+				F16A42A91AAA60020028C441 /* DashboardViewController.swift */,
+				F16A42AA1AAA60020028C441 /* DetailedCourseListViewController.swift */,
+				F16A42AB1AAA60020028C441 /* DetailedDashboardViewController.swift */,
+				F16A42AC1AAA60020028C441 /* SwiftSpinner.swift */,
 				F11845911A2B42FF005B5DAC /* AppDelegate.swift */,
-				F11845931A2B42FF005B5DAC /* ViewController.swift */,
 				F11845951A2B42FF005B5DAC /* Main.storyboard */,
 				F11845981A2B42FF005B5DAC /* Images.xcassets */,
 				F118459A1A2B42FF005B5DAC /* LaunchScreen.xib */,
-				F118458F1A2B42FF005B5DAC /* Supporting Files */,
+				F11845931A2B42FF005B5DAC /* ViewController.swift */,
 				F1C1FEC71A2B75840095C80F /* LocationDelegate.swift */,
 				7161700B1A895C53004CF6F7 /* HTTPHelper.swift */,
 				7161700D1A895E51004CF6F7 /* KeyChainAccess.swift */,
 				F11D165B1A9A550D0035330A /* LogInViewController.swift */,
-				F11D165D1A9A5C960035330A /* AESCrypt */,
 				F11D166D1A9A63BA0035330A /* SignUpViewController.swift */,
+				F173A4C21A88DB79008524A3 /* QRCodeReader */,
+				F118458F1A2B42FF005B5DAC /* Supporting Files */,
+				F11D165D1A9A5C960035330A /* AESCrypt */,
 			);
 			path = Location;
 			sourceTree = "<group>";
@@ -126,6 +165,13 @@
 		F118458F1A2B42FF005B5DAC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F14115951ABC86F100B0AF2F /* CoreTelephony.framework */,
+				F141158B1ABC86B500B0AF2F /* Accelerate.framework */,
+				F141158C1ABC86B500B0AF2F /* AudioToolbox.framework */,
+				F141158D1ABC86B500B0AF2F /* CoreBluetooth.framework */,
+				F141158E1ABC86B500B0AF2F /* CoreFoundation.framework */,
+				F141158F1ABC86B500B0AF2F /* SystemConfiguration.framework */,
+				F14115891ABC869900B0AF2F /* BleshSDK.framework */,
 				F11845901A2B42FF005B5DAC /* Info.plist */,
 				F11D166A1A9A5EEB0035330A /* AES-Bridging-Header.h */,
 			);
@@ -275,13 +321,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				F11D16691A9A5C960035330A /* NSString+Base64.m in Sources */,
+				F16A42B41AAA606B0028C441 /* CourseListViewController.swift in Sources */,
 				F11845941A2B42FF005B5DAC /* ViewController.swift in Sources */,
 				7161700C1A895C53004CF6F7 /* HTTPHelper.swift in Sources */,
 				F11D16661A9A5C960035330A /* AESCrypt.m in Sources */,
 				F11D16671A9A5C960035330A /* NSData+Base64.m in Sources */,
 				F11D165C1A9A550D0035330A /* LogInViewController.swift in Sources */,
 				F173A4C71A88DB79008524A3 /* ReaderView.swift in Sources */,
+				F16A42B21AAA604E0028C441 /* SwiftyJSON.swift in Sources */,
+				F16A42AD1AAA60020028C441 /* DashboardViewController.swift in Sources */,
+				F16A42AF1AAA60020028C441 /* DetailedDashboardViewController.swift in Sources */,
 				F1C1FEC81A2B75840095C80F /* LocationDelegate.swift in Sources */,
+				F16A42AE1AAA60020028C441 /* DetailedCourseListViewController.swift in Sources */,
+				F16A42B01AAA60020028C441 /* SwiftSpinner.swift in Sources */,
 				F11D166E1A9A63BA0035330A /* SignUpViewController.swift in Sources */,
 				F173A4C61A88DB79008524A3 /* QRCodeReader.swift in Sources */,
 				F11D16681A9A5C960035330A /* NSData+CommonCrypto.m in Sources */,
@@ -410,11 +462,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Location",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Location/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/firat/Documents/Developer/Bitirme/Location/AES-Bridging-Header.h";
-				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "/Users/firat/Documents/Developer/Bitirme/Location/AES-Bridging-Header.h";
+				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "/Users/bcanvural/Documents/Bitirme/Location/AES-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -422,11 +479,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Location",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Location/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/firat/Documents/Developer/Bitirme/Location/AES-Bridging-Header.h";
-				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "/Users/firat/Documents/Developer/Bitirme/Location/AES-Bridging-Header.h";
+				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "/Users/bcanvural/Documents/Bitirme/Location/AES-Bridging-Header.h";
 			};
 			name = Release;
 		};
