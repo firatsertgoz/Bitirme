@@ -10,27 +10,27 @@ import Foundation
 
 public class KeychainAccess {
     private class func secClassGenericPassword() -> String {
-        return NSString(format: kSecClassGenericPassword)
+        return NSString(format: kSecClassGenericPassword) as String
     }
     
     private class func secClass() -> String {
-        return NSString(format: kSecClass)
+        return NSString(format: kSecClass) as String
     }
     
     private class func secAttrService() -> String {
-        return NSString(format: kSecAttrService)
+        return NSString(format: kSecAttrService) as String
     }
     
     private class func secAttrAccount() -> String {
-        return NSString(format: kSecAttrAccount)
+        return NSString(format: kSecAttrAccount) as String
     }
     
     private class func secValueData() -> String {
-        return NSString(format: kSecValueData)
+        return NSString(format: kSecValueData) as String
     }
     
     private class func secReturnData() -> String {
-        return NSString(format: kSecReturnData)
+        return NSString(format: kSecReturnData) as String
     }
     
     public class func setPassword(password: String, account: String, service: String = "keyChainDefaultService") {
@@ -56,10 +56,10 @@ public class KeychainAccess {
             return nil
         }
         
-        let retrievedData : NSData = dataTypeRef!.takeRetainedValue() as NSData
+        let retrievedData : NSData = dataTypeRef!.takeRetainedValue() as! NSData
         let password = NSString(data: retrievedData, encoding: NSUTF8StringEncoding)
         
-        return (password as String)
+        return (password as! String)
     }
     
     public class func deletePasswordForAccount(password: String, account: String, service: String = "keyChainDefaultService") {

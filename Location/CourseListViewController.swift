@@ -39,7 +39,7 @@ class CourseListViewController: UIViewController, UITableViewDelegate {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "CourseListRow")
-        
+        cell.selectionStyle = .None
         cell.textLabel?.text = self.json[indexPath.row]["name"].description
         return cell
         
@@ -47,7 +47,7 @@ class CourseListViewController: UIViewController, UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        let targetView = self.storyboard?.instantiateViewControllerWithIdentifier("DetailedCourseListView") as DetailedCourseListViewController
+        let targetView = self.storyboard?.instantiateViewControllerWithIdentifier("DetailedCourseListView") as! DetailedCourseListViewController
         self.selectedCourseId = self.json[indexPath.row]["id"].int
         println("Json is:\n \(self.json.string)")
         println("selectedCourseId is \(self.selectedCourseId)")
@@ -62,7 +62,7 @@ class CourseListViewController: UIViewController, UITableViewDelegate {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if (segue.identifier == "courseListRowSelected") {
-            let destinationVIew = segue.destinationViewController as DetailedCourseListViewController
+            let destinationVIew = segue.destinationViewController as! DetailedCourseListViewController
             destinationVIew.courseId = self.selectedCourseId
         }
     }

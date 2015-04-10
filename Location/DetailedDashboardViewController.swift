@@ -43,7 +43,7 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         //        let cell = UITableView(style: UITableViewCellStyle.Default, reuseIdentifier: "InstructorCell") as CustomTableViewCell
-        let cell = tableView.dequeueReusableCellWithIdentifier("DetailedDashboardCell", forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("DetailedDashboardCell", forIndexPath: indexPath) as! UITableViewCell
         
         //cell.selectionStyle = .None //don't highlight when selected
         cell.textLabel?.text = self.json[indexPath.row]["created_at"].description
@@ -66,7 +66,7 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
         // Pass the selected object to the new view controller.
         
         if segue.identifier == "DetailedDashboardToStudentList" {
-           let destinationView =  segue.destinationViewController as StudentListViewController
+           let destinationView =  segue.destinationViewController as! StudentListViewController
             destinationView.receivedJSON = self.jsonToBeSent
         }
     }

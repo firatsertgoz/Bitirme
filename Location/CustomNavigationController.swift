@@ -38,18 +38,18 @@ class CustomNavigationController: UINavigationController {
         
         if (segue.identifier == "DashboardToDetailed") {
             
-            let destinationView = segue.destinationViewController as DetailedDashboardViewController
+            let destinationView = segue.destinationViewController as! DetailedDashboardViewController
             destinationView.courseId = DashboardViewController_selectedCourseId
         }
             
         else if (segue.identifier == "LoginToCourseList"){
             //to the student UI
-            let destinationView = segue.destinationViewController as CourseListViewController
+            let destinationView = segue.destinationViewController as! CourseListViewController
             destinationView.receivedJSON = self.CourseListViewController_receivedJSON
             
         } else if (segue.identifier == "LoginToDashboard"){
             //to the instructor UI
-            let destinationView = segue.destinationViewController as DashboardViewController
+            let destinationView = segue.destinationViewController as! DashboardViewController
             destinationView.receivedJSON = self.DashboardViewController_receivedJSON
         }
         

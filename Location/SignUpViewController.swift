@@ -35,8 +35,8 @@ class SignUpViewController: UIViewController {
        // self.activityIndicatorView.hidden = false
         
         // validate presence of all required parameters
-        if countElements(self.nameTextField.text) > 0 && countElements(self.emailTextField.text) > 0
-            && countElements(passwordTextField.text) > 0 {
+        if count(self.nameTextField.text) > 0 && count(self.emailTextField.text) > 0
+            && count(passwordTextField.text) > 0 {
                 makeSignUpRequest(self.nameTextField.text, userEmail: self.emailTextField.text,
                     userPassword: self.passwordTextField.text)
         } else {
@@ -45,10 +45,9 @@ class SignUpViewController: UIViewController {
         }
         
     }
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        
+    
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         self.view.endEditing(true)
-        
     }
     
     func makeSignUpRequest(userName:String, userEmail:String, userPassword:String) {
@@ -78,7 +77,7 @@ class SignUpViewController: UIViewController {
     func displayAlertMessage(alertTitle:NSString, alertDescription:NSString) -> Void {
         // hide activityIndicator view and display alert message
         //self.activityIndicatorView.hidden = true
-        let errorAlert = UIAlertView(title:alertTitle, message:alertDescription, delegate:nil, cancelButtonTitle:"OK")
+        let errorAlert = UIAlertView(title:alertTitle as String, message:alertDescription as String, delegate:nil, cancelButtonTitle:"OK")
         errorAlert.show()
     }
     override func viewDidLoad() {

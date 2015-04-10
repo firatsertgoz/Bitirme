@@ -40,7 +40,7 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate{
            NSTimer.scheduledTimerWithTimeInterval(10, target:self, selector: Selector("restartMonitoring"), userInfo: nil, repeats: false)
         }
         
-        var location = locations[0] as CLLocation
+        var location = locations[0] as! CLLocation
         
         println("Latitude: \((location.coordinate.latitude))")
         println("Longitude: \((location.coordinate.longitude))")
@@ -66,7 +66,7 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate{
         println("inside did visit")
         
         
-        if visit!.departureDate.isEqualToDate(NSDate.distantFuture() as NSDate) {
+        if visit!.departureDate.isEqualToDate(NSDate.distantFuture() as! NSDate) {
             // User has arrived, but not left, the location
             
             if (visit != nil) {

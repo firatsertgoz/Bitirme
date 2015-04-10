@@ -21,8 +21,8 @@ enum HTTPRequestContentType {
 struct HTTPHelper {
     static let API_AUTH_NAME = "BITIRME"
     static let API_AUTH_PASSWORD = "yrfafyqteweaqsddteefqddqfwrtysfrqreqqeafyrtssftayrsrrqetytyeefqr"
-    //static let BASE_URL = "https://gentle-stream-7806.herokuapp.com/api"
-    static let BASE_URL = "http://127.0.0.1:3000/api"
+    static let BASE_URL = "https://gentle-stream-7806.herokuapp.com/api"
+    //static let BASE_URL = "http://127.0.0.1:3000/api"
     
     func buildRequest(path: String!, method: String, authType: HTTPRequestAuthType,
         requestContentType: HTTPRequestContentType = HTTPRequestContentType.HTTPJsonContent, requestBoundary:NSString = "") -> NSMutableURLRequest {
@@ -39,7 +39,7 @@ struct HTTPHelper {
                 request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             case .HTTPMultipartContent:
                 let contentType = NSString(format: "multipart/form-data; boundary=%@", requestBoundary)
-                request.addValue(contentType, forHTTPHeaderField: "Content-Type")
+                request.addValue(contentType as String, forHTTPHeaderField: "Content-Type")
             }
             
             // 3. Set the correct Authorization header.
@@ -79,15 +79,15 @@ struct HTTPHelper {
             }
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                let httpResponse = response as NSHTTPURLResponse
-                
+                let httpResponse = response as! NSHTTPURLResponse
+                println(httpResponse.statusCode)
                 if httpResponse.statusCode == 200 {
                     completion(data, nil)
                 } else {
                     var jsonerror:NSError?
-                    let errorDict = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error:&jsonerror) as NSDictionary
+                    let errorDict = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error:&jsonerror) as! NSDictionary
                     
-                    let responseError : NSError = NSError(domain: "HTTPHelperError", code: httpResponse.statusCode, userInfo: errorDict)
+                    let responseError : NSError = NSError(domain: "HTTPHelperError", code: httpResponse.statusCode, userInfo: errorDict as [NSObject : AnyObject])
                     completion(data, responseError)
                 }
             })
@@ -102,7 +102,7 @@ struct HTTPHelper {
         // return correct error message
         if error.domain == "HTTPHelperError" {
             let userInfo = error.userInfo as NSDictionary!
-            errorMessage = userInfo.valueForKey("message") as NSString
+            errorMessage = userInfo.valueForKey("message") as! NSString
         } else {
             errorMessage = error.description
         }

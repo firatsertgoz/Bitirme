@@ -29,8 +29,8 @@ class DetailedCourseListViewController: UIViewController,UITableViewDelegate {
     
     func tableView(tableView: UITableView?, cellForRowAtIndexPath indexPath: NSIndexPath?) -> UITableViewCell? {
         // Configure the cell...
-        let cell = tableView?.dequeueReusableCellWithIdentifier("DetailedCourseListRow", forIndexPath: indexPath!) as UITableViewCell
-        cell.textLabel!.text = self.dataArray[indexPath!.row] as NSString
+        let cell = tableView?.dequeueReusableCellWithIdentifier("DetailedCourseListRow", forIndexPath: indexPath!) as! UITableViewCell
+        cell.textLabel!.text = self.dataArray[indexPath!.row] as? String
         return cell
     }
     

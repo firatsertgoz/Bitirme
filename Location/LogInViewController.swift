@@ -27,8 +27,8 @@ class LogInViewController: UIViewController {
         //self.activityIndicatorView.hidden = false
         
         // validate presense of required parameters
-        if countElements(self.emailTextField.text) > 0 &&
-            countElements(self.passwordTextField.text) > 0 {
+        if count(self.emailTextField.text) > 0 &&
+            count(self.passwordTextField.text) > 0 {
                 makeSignInRequest(self.emailTextField.text, userPassword: self.passwordTextField.text)
         } else {
             SwiftSpinner.show("Some of the required parameters are missing", animated: false)
@@ -41,7 +41,7 @@ class LogInViewController: UIViewController {
         SwiftSpinner.hide()
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         self.view.endEditing(true)
     }
     
@@ -58,13 +58,13 @@ class LogInViewController: UIViewController {
         
         self.navigationItem.title = "Login"
         
-        let email =  KeychainAccess.passwordForAccount("email", service: "KeyChainService")
-        let password = KeychainAccess.passwordForAccount("password", service: "KeyChainService")
-        let auth_token = KeychainAccess.passwordForAccount("Auth_Token", service: "KeyChainService")
-        
-        if (email != nil && password != nil && auth_token != nil) {
-            makeSignInRequest(email!, userPassword: password!)
-        }
+//        let email =  KeychainAccess.passwordForAccount("email", service: "KeyChainService")
+//        let password = KeychainAccess.passwordForAccount("password", service: "KeyChainService")
+//        let auth_token = KeychainAccess.passwordForAccount("Auth_Token", service: "KeyChainService")
+//        
+//        if (email != nil && password != nil && auth_token != nil) {
+//            makeSignInRequest(email!, userPassword: password!)
+//        }
     }
     
     override func viewDidLoad() {
@@ -91,14 +91,14 @@ class LogInViewController: UIViewController {
             if error != nil {
                 let errorMessage = self.httpHelper.getErrorMessage(error)
                 //self.displayAlertMessage("Error", alertDescription: errorMessage)
-                SwiftSpinner.show( errorMessage, animated: false)
+                SwiftSpinner.show( errorMessage as String, animated: false)
                 var timer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: Selector("hide"), userInfo: nil, repeats: false)
                 return
             }
             
             var jsonerror:NSError?
             let responseDict = NSJSONSerialization.JSONObjectWithData(data,
-                options: NSJSONReadingOptions.AllowFragments, error:&jsonerror) as NSDictionary
+                options: NSJSONReadingOptions.AllowFragments, error:&jsonerror) as! NSDictionary
             var stopBool : Bool
             
             // save API AuthToken and ExpiryDate in Keychain
@@ -131,7 +131,7 @@ class LogInViewController: UIViewController {
     func displayAlertMessage(alertTitle:NSString, alertDescription:NSString) -> Void {
         // hide activityIndicator view and display alert message
         //self.activityIndicatorView.hidden = true
-        let errorAlert = UIAlertView(title:alertTitle, message:alertDescription, delegate:nil, cancelButtonTitle:"OK")
+        let errorAlert = UIAlertView(title:alertTitle as String, message:alertDescription as String, delegate:nil, cancelButtonTitle:"OK")
         errorAlert.show()
     }
     
@@ -139,14 +139,14 @@ class LogInViewController: UIViewController {
         //check whether the user is a student or an instructor
         if (self.jsonData!["instructor"]){
             //instructor UI
-            let navController = self.navigationController? as CustomNavigationController
+            let navController = self.navigationController as! CustomNavigationController
             navController.DashboardViewController_receivedJSON = self.jsonData!
             self.navigationController?.performSegueWithIdentifier("LoginToDashboard", sender: self)
         }
         
         else if (self.jsonData!["student"]){
             //student UI
-            let navController = self.navigationController? as CustomNavigationController
+            let navController = self.navigationController as! CustomNavigationController
             navController.CourseListViewController_receivedJSON = self.jsonData!
             self.navigationController?.performSegueWithIdentifier("LoginToCourseList", sender: self)
         }

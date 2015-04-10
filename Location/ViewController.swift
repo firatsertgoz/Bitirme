@@ -3,31 +3,7 @@
 import UIKit
 import CoreLocation
 
-
-class ViewController: UIViewController,QRCodeReaderDelegate
-{
-    lazy var reader: QRCodeReader = QRCodeReader(cancelButtonTitle: "Cancel")
-    
-    // MARK: - QRCodeReader Delegate Methods
-    func reader(reader: QRCodeReader, didScanResult result: String) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    func readerDidCancel(reader: QRCodeReader) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-        
-    }
-    
-    @IBAction func scanAction(sender: AnyObject) {
-        reader.modalPresentationStyle = .FormSheet
-        reader.delegate               = self
-        
-        reader.completionBlock = { (result: String?) in
-            println(result)
-        }
-        
-        presentViewController(reader, animated: true, completion: nil)
-    }
+class ViewController: UIViewController {
     
     let httpHelper = HTTPHelper()
     

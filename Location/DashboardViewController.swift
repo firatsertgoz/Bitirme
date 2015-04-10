@@ -93,7 +93,7 @@ class DashboardViewController: UIViewController,UITableViewDelegate {
     func displayAlertMessage(alertTitle:NSString, alertDescription:NSString) -> Void {
         // hide activityIndicator view and display alert message
         //self.activityIndicatorView.hidden = true
-        let errorAlert = UIAlertView(title:alertTitle, message:alertDescription, delegate:nil, cancelButtonTitle:"OK")
+        let errorAlert = UIAlertView(title:alertTitle as String, message:alertDescription as String, delegate:nil, cancelButtonTitle:"OK")
         errorAlert.show()
     }
     
@@ -119,7 +119,7 @@ class DashboardViewController: UIViewController,UITableViewDelegate {
             
             var jsonerror:NSError?
             let responseDict = NSJSONSerialization.JSONObjectWithData(data,
-                options: NSJSONReadingOptions.AllowFragments, error:&jsonerror) as NSDictionary
+                options: NSJSONReadingOptions.AllowFragments, error:&jsonerror) as! NSDictionary
             var stopBool : Bool
             
             // save API AuthToken and ExpiryDate in Keychain
@@ -133,12 +133,12 @@ class DashboardViewController: UIViewController,UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        let targetView = self.storyboard?.instantiateViewControllerWithIdentifier("DetailedDashboard") as DetailedDashboardViewController
+        let targetView = self.storyboard?.instantiateViewControllerWithIdentifier("DetailedDashboard") as! DetailedDashboardViewController
         self.selectedCourseId = self.json[indexPath.row]["id"].int!
         println("Json is:\n \(self.json.string)")
         println("selectedCourseId is \(self.selectedCourseId)")
         
-        let customNav = self.navigationController? as CustomNavigationController
+        let customNav = self.navigationController as! CustomNavigationController
         customNav.DashboardViewController_selectedCourseId = self.selectedCourseId
         self.navigationController?.performSegueWithIdentifier("DashboardToDetailed", sender: self)
     }
@@ -151,8 +151,8 @@ class DashboardViewController: UIViewController,UITableViewDelegate {
         // Pass the selected object to the new view controller.
         
         if (segue.identifier == "DashboardToDetailed") {
-            let navController = segue.destinationViewController as UINavigationController
-            let destinationView = navController.topViewController as DetailedDashboardViewController
+            let navController = segue.destinationViewController as! UINavigationController
+            let destinationView = navController.topViewController as! DetailedDashboardViewController
          //   let destinationView = segue.destinationViewController as DetailedDashboardViewController
             destinationView.courseId = self.selectedCourseId!
         }

@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        let notification = launchOptions?[UIApplicationLaunchOptionsLocalNotificationKey] as UILocalNotification!
+        let notification = launchOptions?[UIApplicationLaunchOptionsLocalNotificationKey] as! UILocalNotification!
         if (notification != nil) {
             Blesh.sharedInstance().bleshReceivedLocalNotification(notification)
         }

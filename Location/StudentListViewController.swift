@@ -38,7 +38,7 @@ class StudentListViewController: UIViewController, UITableViewDelegate {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("studentListCell", forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("studentListCell", forIndexPath: indexPath) as! UITableViewCell
         //cell.selectionStyle = .None //don't highlight when selected
         
         cell.textLabel?.text = self.receivedJSON[indexPath.row]["name"].description
