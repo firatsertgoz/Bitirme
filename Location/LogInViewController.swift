@@ -2,7 +2,6 @@
 
 import UIKit
 
-
 class LogInViewController: UIViewController {
     
     let httpHelper = HTTPHelper()
@@ -69,8 +68,6 @@ class LogInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -136,6 +133,22 @@ class LogInViewController: UIViewController {
     }
     
     func toTheNextView(){
+        //init blesh
+        Blesh.sharedInstance().initBleshWithAPIUser(
+            "firat.sertgoz",
+            APIKey: "firat123",
+            integrationType: "M",
+            integrationId: self.jsonData!["api_authtoken"].string,
+            pushToken: "Push Notification Token",
+            optionalKey: "Optional Key")
+        
+    
+        Blesh.sharedInstance().didCloseCampaignView =
+            { (NSString valueType, NSString value) -> Void in
+                println("Campaign closed")
+            }
+        
+        
         //check whether the user is a student or an instructor
         if (self.jsonData!["instructor"]){
             //instructor UI
