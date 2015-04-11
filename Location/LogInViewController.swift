@@ -2,6 +2,7 @@
 
 import UIKit
 
+
 class LogInViewController: UIViewController {
     
     let httpHelper = HTTPHelper()
@@ -75,6 +76,43 @@ class LogInViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func getCourseEntities() {
+        // Create HTTP request and set request Body
+        let httpRequest = httpHelper.buildRequest("get_course_entities", method: "GET",
+            authType: HTTPRequestAuthType.HTTPTokenAuth)
+        
+        httpRequest.HTTPBody = "".dataUsingEncoding(NSUTF8StringEncoding);
+        
+        httpHelper.sendRequest(httpRequest, completion: {(data:NSData!, error:NSError!) in
+            // Display error
+            if error != nil {
+                let errorMessage = self.httpHelper.getErrorMessage(error)
+                //self.displayAlertMessage("Error", alertDescription: errorMessage)
+                SwiftSpinner.show( errorMessage as String, animated: false)
+                var timer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: Selector("hide"), userInfo: nil, repeats: false)
+                return
+            }
+            
+
+            // save email and password in Keychain
+            //save json to pass it to the next controller
+            var jsonData = JSON(data:data)
+            
+            NSUserDefaults.standardUserDefaults().setObject(jsonData.object, forKey: "Schedule")
+            println(jsonData)
+            if(NSUserDefaults.standardUserDefaults().objectForKey("Schedule")==nil){
+                println("it's nil")
+            }
+            
+            
+            var json = JSON(NSUserDefaults.standardUserDefaults().objectForKey("Schedule") as! NSArray)
+        
+            println(json)
+        
+        })
+    }
+
+    
     func makeSignInRequest(userEmail:String, userPassword:String) {
         // Create HTTP request and set request Body
         let httpRequest = httpHelper.buildRequest("signin", method: "POST",
@@ -133,21 +171,26 @@ class LogInViewController: UIViewController {
     }
     
     func toTheNextView(){
+        
+        getCourseEntities()
+    
+       
+       
+       
         //init blesh
         Blesh.sharedInstance().initBleshWithAPIUser(
             "firat.sertgoz",
-            APIKey: "firat123",
+            APIKey: "Un6e27sSj2",
             integrationType: "M",
             integrationId: self.jsonData!["api_authtoken"].string,
             pushToken: "Push Notification Token",
-            optionalKey: "Optional Key")
-        
-    
+            optionalKey: "Optional Key"
+        )
+     
         Blesh.sharedInstance().didCloseCampaignView =
             { (NSString valueType, NSString value) -> Void in
                 println("Campaign closed")
             }
-        
         
         //check whether the user is a student or an instructor
         if (self.jsonData!["instructor"]){

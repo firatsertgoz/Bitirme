@@ -113,21 +113,13 @@ class DashboardViewController: UIViewController,UITableViewDelegate {
                 return
             }
             
-            // hide activity indicator and update userLoggedInFlag
-            // self.activityIndicatorView.hidden = true
-            // self.updateUserLoggedInFlag()
-            
             var jsonerror:NSError?
             let responseDict = NSJSONSerialization.JSONObjectWithData(data,
                 options: NSJSONReadingOptions.AllowFragments, error:&jsonerror) as! NSDictionary
             var stopBool : Bool
-            
-            // save API AuthToken and ExpiryDate in Keychain
-//            self.saveApiTokenInKeychain(responseDict)
-//            self.jsonData = JSON(data:data) //save json to pass it to the next controller
+
             var jsonReturned = JSON(data:data)
             println(jsonReturned)
-            
         })
     }
     

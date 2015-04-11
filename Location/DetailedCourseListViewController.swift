@@ -4,18 +4,30 @@ import UIKit
 
 class DetailedCourseListViewController: UIViewController,UITableViewDelegate {
 
+    @IBOutlet weak var totalAttendanceLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
-   
+    @IBOutlet weak var weeksLabel: UILabel!
+    
     let httpHelper = HTTPHelper();
     var json = JSON([]);
     var courseId : Int!;
     var rowCount = 0;
     var dataArray : NSArray = NSArray()
+    var termStartDate : String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         getAttendedSessionsByCourseId(self.courseId)
+        
+        var startDate: AnyObject? = NSUserDefaults.standardUserDefaults().objectForKey("TermStartDate")
+        if (startDate==nil){
+            get_term_start_date()
+        } else {
+            println(startDate as! NSDictionary)
+            self.termStartDate = JSON(startDate as! NSDictionary)["termstartdate"].stringValue
+            updateWeeksLabel()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,12 +40,39 @@ class DetailedCourseListViewController: UIViewController,UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView?, cellForRowAtIndexPath indexPath: NSIndexPath?) -> UITableViewCell? {
-        // Configure the cell...
-        let cell = tableView?.dequeueReusableCellWithIdentifier("DetailedCourseListRow", forIndexPath: indexPath!) as! UITableViewCell
-        cell.textLabel!.text = self.dataArray[indexPath!.row] as? String
+        let cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "DetailedCourseListRow")
+        cell.selectionStyle = .None
+       // cell.textLabel?.text = self.json[indexPath!.row][1].description
+        var str : String = self.json[indexPath!.row]["created_at"].stringValue
+        var newString = str.stringByReplacingOccurrencesOfString("T", withString: " ", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        newString = substr(newString,start:0,end:16)
+        cell.textLabel?.text = newString
         return cell
     }
+    func get_term_start_date(){
+        
+        // HTTP Request
+        let httpRequest = httpHelper.buildRequest("get_term_start_date", method: "GET", authType: HTTPRequestAuthType.HTTPTokenAuth)
     
+        //httpRequest.HTTPBody = "{\"course_id\":\"\(self.courseId)\"}".dataUsingEncoding(NSUTF8StringEncoding)
+        httpRequest.HTTPBody = "".dataUsingEncoding(NSUTF8StringEncoding)
+        
+        httpHelper.sendRequest(httpRequest, completion: { (data:NSData!, error:NSError!) -> Void in
+            //display error
+            if error != nil {
+                let errorMessage = self.httpHelper.getErrorMessage(error)
+                println(errorMessage)
+            }
+            else {
+                var jsonerror:NSError?
+                var json = JSON(data:data)
+                NSUserDefaults.standardUserDefaults().setObject(json.object, forKey: "TermStartDate")
+                self.termStartDate = json["termstartdate"].stringValue
+                self.updateWeeksLabel()
+            }
+        })
+    }
+
     func getAttendedSessionsByCourseId(courseId:Int){
         
         // HTTP Request
@@ -50,29 +89,32 @@ class DetailedCourseListViewController: UIViewController,UITableViewDelegate {
                 println(errorMessage)
             }
             else {
-                var jsonerror:NSError?
-                    self.json = JSON(data: data)
-                //   println(self.json[0]["id"])
-                //    self.rowNumber = self.json.count
-                println(self.json[0].string)
+                self.json = JSON(data: data)
+                println(self.json)
+                self.rowCount = self.json.count
                 self.updateTableView()
             }
         })
     }
+    func updateWeeksLabel(){
+         //self.weeksLabel.text = String(stringInterpolationSegment: self.termStartDate)
+        var date = NSDate(dateString: self.termStartDate);
+        var secondsNS: NSTimeInterval = date.timeIntervalSinceNow
+        var seconds:Int = Int(secondsNS)
+        var weeks = ((-1) * (seconds) ) / (60*60*24*7)
+        self.weeksLabel.text = "Week \(String(weeks))"
+    }
+    
+    //Swift substring
+    func substr(str:String,start:Int,end:Int) -> String {
+        let rangeOfStr = Range(start: advance(str.startIndex,start),
+            end: advance(str.startIndex, end))
+        let lastStr = str.substringWithRange(rangeOfStr)
+        return lastStr
+    }
 
     func updateTableView(){
         self.tableView.reloadData()
+        self.totalAttendanceLabel.text = "Total Attendances: \(self.rowCount)"
     }
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

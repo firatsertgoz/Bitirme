@@ -1,10 +1,3 @@
-//
-//  HTTPHelper.swift
-//  Selfie
-//
-//  Created by Subhransu Behera on 18/11/14.
-//  Copyright (c) 2014 subhb.org. All rights reserved.
-//
 
 import Foundation
 
@@ -21,8 +14,8 @@ enum HTTPRequestContentType {
 struct HTTPHelper {
     static let API_AUTH_NAME = "BITIRME"
     static let API_AUTH_PASSWORD = "yrfafyqteweaqsddteefqddqfwrtysfrqreqqeafyrtssftayrsrrqetytyeefqr"
-    static let BASE_URL = "https://gentle-stream-7806.herokuapp.com/api"
-    //static let BASE_URL = "http://127.0.0.1:3000/api"
+    //static let BASE_URL = "https://gentle-stream-7806.herokuapp.com/api"
+    static let BASE_URL = "http://127.0.0.1:3000/api"
     
     func buildRequest(path: String!, method: String, authType: HTTPRequestAuthType,
         requestContentType: HTTPRequestContentType = HTTPRequestContentType.HTTPJsonContent, requestBoundary:NSString = "") -> NSMutableURLRequest {
@@ -64,7 +57,6 @@ struct HTTPHelper {
             
             return request
     }
-    
     
     func sendRequest(request: NSURLRequest, completion:(NSData!, NSError!) -> Void) -> () {
         // Create a NSURLSession task

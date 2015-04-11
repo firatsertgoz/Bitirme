@@ -1,21 +1,12 @@
-//
-//  CustomNavigationController.swift
-//  Location
-//
-//  Created by Baris Can Vural on 3/23/15.
-//  Copyright (c) 2015 Baris Can Vural. All rights reserved.
-//
 
 import UIKit
 
 class CustomNavigationController: UINavigationController {
     
-    
     var DashboardViewController_selectedCourseId : Int?;
     var CourseListViewController_receivedJSON = JSON([]);
     var DashboardViewController_receivedJSON = JSON([]);
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -27,10 +18,7 @@ class CustomNavigationController: UINavigationController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    
     // MARK: - Navigation
-
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
@@ -52,12 +40,5 @@ class CustomNavigationController: UINavigationController {
             let destinationView = segue.destinationViewController as! DashboardViewController
             destinationView.receivedJSON = self.DashboardViewController_receivedJSON
         }
-        
-        
-        
-        
-        
     }
-    
-
 }

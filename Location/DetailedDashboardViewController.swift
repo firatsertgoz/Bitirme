@@ -15,6 +15,7 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
     var courseId : Int!
     var json = JSON([])
     var jsonToBeSent = JSON([])
+    var names : NSMutableArray = []
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -26,7 +27,7 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        getLectureSessions()
+        get_attendees()
     }
 
     override func didReceiveMemoryWarning() {
@@ -35,46 +36,24 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return rowNumber
-        
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        //        let cell = UITableView(style: UITableViewCellStyle.Default, reuseIdentifier: "InstructorCell") as CustomTableViewCell
-        let cell = tableView.dequeueReusableCellWithIdentifier("DetailedDashboardCell", forIndexPath: indexPath) as! UITableViewCell
-        
-        //cell.selectionStyle = .None //don't highlight when selected
+        var cell:CustomPrototypeCell = self.tableView.dequeueReusableCellWithIdentifier("DetailedDashboardCell") as! CustomPrototypeCell
+        cell.selectionStyle = .None //don't highlight when selected
         cell.textLabel?.text = self.json[indexPath.row]["created_at"].description
+        cell.nameLabel.text = self.names[indexPath.row] as! String
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func get_attendees() {
         
-        let ls_id = self.json[indexPath.row]["id"].int
-        
-        getStudentListForNextView(ls_id!)
-        
-        
-        
-    }
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-        
-        if segue.identifier == "DetailedDashboardToStudentList" {
-           let destinationView =  segue.destinationViewController as! StudentListViewController
-            destinationView.receivedJSON = self.jsonToBeSent
-        }
-    }
-    
-    func getStudentListForNextView(lecture_session_id:Int){
         // HTTP Request
-        let httpRequest = httpHelper.buildRequest("get_student_list_by_lecture_session_id?lecture_session_id=\(lecture_session_id)", method: "GET", authType: HTTPRequestAuthType.HTTPTokenAuth)
+        let httpRequest = httpHelper.buildRequest("get_attendees_by_course_id?course_id=\(self.courseId)", method: "GET", authType: HTTPRequestAuthType.HTTPTokenAuth)
+        //httpRequest.HTTPBody = "{\"course_id\":\"\(self.courseId)\"}".dataUsingEncoding(NSUTF8StringEncoding)
         httpRequest.HTTPBody = "".dataUsingEncoding(NSUTF8StringEncoding)
+        
         httpHelper.sendRequest(httpRequest, completion: { (data:NSData!, error:NSError!) -> Void in
             //display error
             if error != nil {
@@ -82,31 +61,34 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
                 println(errorMessage)
             }
             else {
-                var jsonerror:NSError?
-                self.jsonToBeSent = JSON(data: data)
-                self.performSegueWithIdentifier("DetailedDashboardToStudentList", sender: self)
-            }
-        })
-    }
-    
-    func getLectureSessions(){
-        // HTTP Request
-        let httpRequest = httpHelper.buildRequest("get_lecture_sessions_by_course_id?course_id=\(self.courseId)", method: "GET", authType: HTTPRequestAuthType.HTTPTokenAuth)
-        httpRequest.HTTPBody = "".dataUsingEncoding(NSUTF8StringEncoding)
-        httpHelper.sendRequest(httpRequest, completion: { (data:NSData!, error:NSError!) -> Void in
-            //display error
-            if error != nil {
-                let errorMessage = self.httpHelper.getErrorMessage(error)
-                println(errorMessage)
-            }
-            else {
-                var jsonerror:NSError?
                 self.json = JSON(data: data)
-                self.rowNumber = self.json.count
                 println(self.json)
+                self.rowNumber = self.getRowCount()
                 self.tableView.reloadData()
             }
         })
     }
-
+    
+    func getRowCount() -> Int {
+        var set:Set<String> = Set<String>()
+        for(var i=0;i<self.json.count;i++){
+           set.insert(self.json[i]["name"].stringValue)
+        }
+        
+        for name in set {
+            self.names.addObject(name)
+        }
+        
+        return set.count
+    }
 }
+
+class CustomPrototypeCell: UITableViewCell {
+    @IBOutlet weak var thumbnail: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var percentageLabel: UILabel!
+}
+
+
+
+

@@ -21,8 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if (notification != nil) {
             Blesh.sharedInstance().bleshReceivedLocalNotification(notification)
         }
-        
-
         return true
     }
     
@@ -30,11 +28,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Blesh.sharedInstance().bleshReceivedLocalNotification(notification)
     }
     
-    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, completionHandler: () -> Void) {
+    func application(application: UIApplication,
+        handleActionWithIdentifier identifier: String?,
+        forLocalNotification notification: UILocalNotification,
+        completionHandler: () -> Void  )
+    {
+        println("handleActionWithIdentifier")
         Blesh.sharedInstance().bleshReceivedLocalNotification(notification)
+        completionHandler()
     }
-    
-    
     
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
