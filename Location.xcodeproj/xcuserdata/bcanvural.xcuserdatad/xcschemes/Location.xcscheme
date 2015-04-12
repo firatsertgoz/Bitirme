@@ -34,6 +34,48 @@
                ReferencedContainer = "container:Location.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F1C563851ADABF9400CB6DA6"
+               BuildableName = "JBChartTests.xctest"
+               BlueprintName = "JBChartTests"
+               ReferencedContainer = "container:Location.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F1C563AE1ADAC77700CB6DA6"
+               BuildableName = "PNChartTests.xctest"
+               BlueprintName = "PNChartTests"
+               ReferencedContainer = "container:Location.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F1A15E7E1ADAD06E00056BCF"
+               BuildableName = "PNChartSwiftTests.xctest"
+               BlueprintName = "PNChartSwiftTests"
+               ReferencedContainer = "container:Location.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -49,6 +91,36 @@
                BlueprintIdentifier = "F11845A01A2B42FF005B5DAC"
                BuildableName = "LocationTests.xctest"
                BlueprintName = "LocationTests"
+               ReferencedContainer = "container:Location.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F1C563851ADABF9400CB6DA6"
+               BuildableName = "JBChartTests.xctest"
+               BlueprintName = "JBChartTests"
+               ReferencedContainer = "container:Location.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F1C563AE1ADAC77700CB6DA6"
+               BuildableName = "PNChartTests.xctest"
+               BlueprintName = "PNChartTests"
+               ReferencedContainer = "container:Location.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F1A15E7E1ADAD06E00056BCF"
+               BuildableName = "PNChartSwiftTests.xctest"
+               BlueprintName = "PNChartSwiftTests"
                ReferencedContainer = "container:Location.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -72,7 +144,8 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F118458B1A2B42FF005B5DAC"
@@ -94,7 +167,8 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F118458B1A2B42FF005B5DAC"

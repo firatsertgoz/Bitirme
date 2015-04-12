@@ -58,13 +58,13 @@ class LogInViewController: UIViewController {
         
         self.navigationItem.title = "Login"
         
-//        let email =  KeychainAccess.passwordForAccount("email", service: "KeyChainService")
-//        let password = KeychainAccess.passwordForAccount("password", service: "KeyChainService")
-//        let auth_token = KeychainAccess.passwordForAccount("Auth_Token", service: "KeyChainService")
-//        
-//        if (email != nil && password != nil && auth_token != nil) {
-//            makeSignInRequest(email!, userPassword: password!)
-//        }
+        let email =  KeychainAccess.passwordForAccount("email", service: "KeyChainService")
+        let password = KeychainAccess.passwordForAccount("password", service: "KeyChainService")
+        let auth_token = KeychainAccess.passwordForAccount("Auth_Token", service: "KeyChainService")
+        
+        if (email != nil && password != nil && auth_token != nil) {
+            makeSignInRequest(email!, userPassword: password!)
+        }
     }
     
     override func viewDidLoad() {
