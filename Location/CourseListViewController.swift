@@ -1,5 +1,4 @@
 
-
 import UIKit
 
 class CourseListViewController: UIViewController, UITableViewDelegate {
@@ -40,7 +39,7 @@ class CourseListViewController: UIViewController, UITableViewDelegate {
         
         let cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "CourseListRow")
         cell.selectionStyle = .None
-        cell.textLabel?.text = self.json[indexPath.row]["name"].description
+        cell.textLabel?.text = self.json[indexPath.row]["course"]["name"].stringValue
         return cell
         
     }
@@ -48,7 +47,7 @@ class CourseListViewController: UIViewController, UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let targetView = self.storyboard?.instantiateViewControllerWithIdentifier("DetailedCourseListView") as! DetailedCourseListViewController
-        self.selectedCourseId = self.json[indexPath.row]["id"].int
+        self.selectedCourseId = self.json[indexPath.row]["course"]["id"].int
         println("Json is:\n \(self.json.string)")
         println("selectedCourseId is \(self.selectedCourseId)")
         
@@ -80,6 +79,8 @@ class CourseListViewController: UIViewController, UITableViewDelegate {
             else {
                 var jsonerror:NSError?
                 self.json = JSON(data: data)
+                println("In get courses:")
+                println(self.json)
                 self.rowNumber = self.json.count
                 self.tableView.reloadData()
             }

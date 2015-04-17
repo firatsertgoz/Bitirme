@@ -51,7 +51,7 @@ class DashboardViewController: UIViewController,UITableViewDelegate {
         
         let cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "InstructorCell") as UITableViewCell
         cell.selectionStyle = .None //don't highlight when selected
-        cell.textLabel?.text = self.json[indexPath.row]["name"].description
+        cell.textLabel?.text = self.json[indexPath.row]["course"]["name"].stringValue
         return cell
     }
     
@@ -75,21 +75,6 @@ class DashboardViewController: UIViewController,UITableViewDelegate {
         })
     }
     
-     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [AnyObject]? {
-        
-        var moreRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Create a Lecture Session", handler:{action, indexpath in
-            println("MORE•ACTION");
-            self.createLectureSession(self.json[indexPath.row]["id"].int!)
-            
-        });
-        
-        moreRowAction.backgroundColor = UIColor(red: 0.298, green: 0.851, blue: 0.3922, alpha: 1.0);
-        
-        return [ moreRowAction];
-    }
-    
-    func tableView(tableView: UITableView!, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath!) {
-    }
     func displayAlertMessage(alertTitle:NSString, alertDescription:NSString) -> Void {
         // hide activityIndicator view and display alert message
         //self.activityIndicatorView.hidden = true
@@ -97,36 +82,10 @@ class DashboardViewController: UIViewController,UITableViewDelegate {
         errorAlert.show()
     }
     
-    func createLectureSession(courseId:Int) {
-        // Create HTTP request and set request Body
-        let httpRequest = httpHelper.buildRequest("create_lecturesession_by_course_id", method: "POST",
-            authType: HTTPRequestAuthType.HTTPTokenAuth)
-        
-        
-        httpRequest.HTTPBody = "{\"course_id\":\"\(courseId)\"}".dataUsingEncoding(NSUTF8StringEncoding);
-        
-        httpHelper.sendRequest(httpRequest, completion: {(data:NSData!, error:NSError!) in
-            // Display error
-            if error != nil {
-                let errorMessage = self.httpHelper.getErrorMessage(error)
-                self.displayAlertMessage("Error", alertDescription: errorMessage)
-                return
-            }
-            
-            var jsonerror:NSError?
-            let responseDict = NSJSONSerialization.JSONObjectWithData(data,
-                options: NSJSONReadingOptions.AllowFragments, error:&jsonerror) as! NSDictionary
-            var stopBool : Bool
-
-            var jsonReturned = JSON(data:data)
-            println(jsonReturned)
-        })
-    }
-    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let targetView = self.storyboard?.instantiateViewControllerWithIdentifier("DetailedDashboard") as! DetailedDashboardViewController
-        self.selectedCourseId = self.json[indexPath.row]["id"].int!
+        self.selectedCourseId = self.json[indexPath.row]["course"]["id"].int!
         println("Json is:\n \(self.json.string)")
         println("selectedCourseId is \(self.selectedCourseId)")
         
