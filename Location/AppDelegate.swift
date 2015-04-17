@@ -33,7 +33,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         forLocalNotification notification: UILocalNotification,
         completionHandler: () -> Void  )
     {
-        println("handleActionWithIdentifier")
         Blesh.sharedInstance().bleshReceivedLocalNotification(notification)
         completionHandler()
     }

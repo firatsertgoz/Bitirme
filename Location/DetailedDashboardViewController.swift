@@ -79,7 +79,7 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell:CustomPrototypeCell = self.tableView.dequeueReusableCellWithIdentifier("DetailedDashboardCell") as! CustomPrototypeCell
+        var cell:DetailedDashboardCell = self.tableView.dequeueReusableCellWithIdentifier("DetailedDashboardCell") as! DetailedDashboardCell
         cell.selectionStyle = .None //don't highlight when selected
         cell.textLabel?.text = self.atendeesData![indexPath.row]["created_at"].stringValue
         cell.nameLabel.text = self.names[indexPath.row] as! String
@@ -315,7 +315,7 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
     
 }
 
-class CustomPrototypeCell: UITableViewCell {
+class DetailedDashboardCell: UITableViewCell {
     @IBOutlet weak var thumbnail: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var percentageLabel: UILabel!

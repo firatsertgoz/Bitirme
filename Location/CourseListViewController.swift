@@ -1,13 +1,18 @@
 
 import UIKit
+import Charts
 
-class CourseListViewController: UIViewController, UITableViewDelegate {
+
+class CourseListViewController: UIViewController, UITableViewDelegate,ChartViewDelegate {
     
     var rowNumber = 0
     var json:JSON = JSON([])
     var selectedCourseId: Int?
     var responseDict:NSArray = NSArray()
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var studentImage: UIImageView!
+    @IBOutlet weak var greetingLabel: UILabel!
+    @IBOutlet weak var scrollView: UIScrollView!
     var receivedJSON = JSON([])
     
     let httpHelper = HTTPHelper()
@@ -15,6 +20,17 @@ class CourseListViewController: UIViewController, UITableViewDelegate {
         super.viewDidLoad()
         self.getCourses()
         println(self.receivedJSON)
+        tableView.rowHeight = 150
+       // tableView.separatorColor = UIColor.clearColor()
+        
+        
+        
+        
+      //  var refreshControl = UIRefreshControl()
+      //  refreshControl.addTarget(self, action: <#Selector#>, forControlEvents: <#UIControlEvents#>)
+        studentImage.image = studentImage.image?.roundCornersToCircle(border: 10, color: UIColor.grayColor())
+        greetingLabel.text = "Welcome, "+receivedJSON["first_name"].stringValue
+        
     }
     
     // Disable navigation bar
@@ -30,27 +46,63 @@ class CourseListViewController: UIViewController, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return rowNumber
-        
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "CourseListRow")
+       
+        var cell:CourseListCell = self.tableView.dequeueReusableCellWithIdentifier("CourseListCell") as! CourseListCell
         cell.selectionStyle = .None
-        cell.textLabel?.text = self.json[indexPath.row]["course"]["name"].stringValue
+        
+        cell.courseLabel?.text = self.json[indexPath.row]["course"]["name"].stringValue
+        setPieChartOptions(cell.pieChart,centerText: self.json[indexPath.row]["attendance_percentage"].stringValue as String)
+    
         return cell
+    }
+    func setPieChartOptions(pie:PieChartView,centerText:String){
+        
+        pie.delegate = self
+        pie.usePercentValuesEnabled = true
+        pie.holeTransparent = true
+        pie.holeRadiusPercent = 0.5
+        pie.transparentCircleRadiusPercent = 0.55
+        pie.drawHoleEnabled = true
+        pie.descriptionText = ""
+        pie.rotationAngle = 0
+        pie.rotationEnabled = true
+        pie.userInteractionEnabled = false
+        pie.animate(xAxisDuration: 1.5,yAxisDuration:1.5)
+        
+        var colors :NSMutableArray = NSMutableArray()
+        colors.addObjectsFromArray(ChartColorTemplates.colorful())
+        colors.addObjectsFromArray(ChartColorTemplates.joyful())
+        
+        var color:UIColor = ChartColorTemplates.colorful()[3]
+        var color2:UIColor = UIColor(red: 202/255 , green: 30/255, blue: 4/255, alpha: 1)
+        var c = [color,color2]
+        
+        pie.centerText = "%"+centerText
+        
+        var entry : BarChartDataEntry = BarChartDataEntry(value: Float(centerText.toInt()!), xIndex: 0)
+        
+        var complement : BarChartDataEntry = BarChartDataEntry(value:Float(100 - centerText.toInt()!), xIndex:1)
+        var yValues = [entry,complement]
+        
+        var dataSet : PieChartDataSet = PieChartDataSet(yVals: yValues)
+        dataSet.drawValuesEnabled = false
+        dataSet.sliceSpace = 2
+        pie.legend.enabled = false
+        var data : ChartData = ChartData(xVals: ["",""], dataSet: dataSet)
+        dataSet.colors = c
+        pie.data = data
         
     }
-    
+
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let targetView = self.storyboard?.instantiateViewControllerWithIdentifier("DetailedCourseListView") as! DetailedCourseListViewController
         self.selectedCourseId = self.json[indexPath.row]["course"]["id"].int
-        println("Json is:\n \(self.json.string)")
-        println("selectedCourseId is \(self.selectedCourseId)")
-        
         self.performSegueWithIdentifier("courseListRowSelected", sender: self)
     }
     
@@ -61,8 +113,8 @@ class CourseListViewController: UIViewController, UITableViewDelegate {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if (segue.identifier == "courseListRowSelected") {
-            let destinationVIew = segue.destinationViewController as! DetailedCourseListViewController
-            destinationVIew.courseId = self.selectedCourseId
+            let destinationView = segue.destinationViewController as! DetailedCourseListViewController
+            destinationView.courseId = self.selectedCourseId
         }
     }
     
@@ -86,4 +138,13 @@ class CourseListViewController: UIViewController, UITableViewDelegate {
             }
         })
     }
+ 
 }
+
+class CourseListCell: UITableViewCell {
+    @IBOutlet weak var courseLabel: UILabel!
+    @IBOutlet weak var pieChart: PieChartView!
+}
+
+
+

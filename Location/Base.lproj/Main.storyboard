@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AZe-td-0OO">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AZe-td-0OO">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -365,16 +365,57 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="qzx-rE-hf7">
-                                <rect key="frame" x="0.0" y="101" width="320" height="642"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="H0c-la-ubt">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="274"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="firat.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="oxz-wS-ELb">
+                                            <rect key="frame" x="73" y="8" width="174" height="158"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="174" id="eX9-hL-bLX"/>
+                                                <constraint firstAttribute="height" constant="158" id="m72-OF-mmy"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iuv-i9-zrr">
+                                            <rect key="frame" x="13" y="208" width="288" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstAttribute="centerX" secondItem="oxz-wS-ELb" secondAttribute="centerX" id="2Vr-2u-Ddz"/>
+                                        <constraint firstAttribute="centerX" secondItem="Iuv-i9-zrr" secondAttribute="centerX" id="vIu-KM-mDR"/>
+                                    </constraints>
+                                </view>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CourseListRow" id="vMr-4j-ODU">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CourseListCell" rowHeight="500" id="vMr-4j-ODU" customClass="CourseListCell" customModule="Location" customModuleProvider="target">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vMr-4j-ODU" id="e1f-qr-1fJ">
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H9O-ih-pMw" customClass="PieChartView" customModule="Charts">
+                                                    <rect key="frame" x="175" y="0.0" width="137" height="149"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RqJ-7y-EYc">
+                                                    <rect key="frame" x="8" y="36" width="92" height="78"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="H9O-ih-pMw" firstAttribute="trailing" secondItem="e1f-qr-1fJ" secondAttribute="trailingMargin" id="X0z-i9-ZbV"/>
+                                                <constraint firstItem="RqJ-7y-EYc" firstAttribute="leading" secondItem="e1f-qr-1fJ" secondAttribute="leading" constant="30" id="ZoT-Ir-Wu3"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="a5O-F4-qt0" kind="show" identifier="courseListRowSelected" id="fyj-Dc-Qfl"/>
+                                            <outlet property="courseLabel" destination="RqJ-7y-EYc" id="XhD-KP-HMo"/>
+                                            <outlet property="pieChart" destination="H9O-ih-pMw" id="yWd-Gf-h28"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -386,16 +427,20 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="bottomMargin" secondItem="qzx-rE-hf7" secondAttribute="bottom" constant="-74" id="5V5-Or-rsp"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="qzx-rE-hf7" secondAttribute="trailing" constant="-16" id="Eb8-GE-OMe"/>
-                            <constraint firstItem="qzx-rE-hf7" firstAttribute="top" secondItem="9Dz-o8-bzA" secondAttribute="topMargin" id="SLy-f0-Xgg"/>
-                            <constraint firstItem="qzx-rE-hf7" firstAttribute="leading" secondItem="9Dz-o8-bzA" secondAttribute="leadingMargin" constant="-16" id="vlR-lU-n0i"/>
+                            <constraint firstItem="ksr-kE-96I" firstAttribute="top" secondItem="qzx-rE-hf7" secondAttribute="bottom" id="Ptw-Vw-uEa"/>
+                            <constraint firstAttribute="centerX" secondItem="qzx-rE-hf7" secondAttribute="centerX" id="Qzx-hk-mgW"/>
+                            <constraint firstAttribute="trailing" secondItem="qzx-rE-hf7" secondAttribute="trailing" id="SGD-Gq-5yU"/>
+                            <constraint firstItem="qzx-rE-hf7" firstAttribute="leading" secondItem="9Dz-o8-bzA" secondAttribute="leading" constant="-16" id="jcf-FK-PKS"/>
+                            <constraint firstItem="qzx-rE-hf7" firstAttribute="top" secondItem="8Yh-21-EGA" secondAttribute="bottom" id="xgx-7R-VTJ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="R6F-ot-hRT"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="greetingLabel" destination="Iuv-i9-zrr" id="BdG-l6-hxO"/>
+                        <outlet property="studentImage" destination="oxz-wS-ELb" id="hSy-hI-Fxu"/>
                         <outlet property="tableView" destination="qzx-rE-hf7" id="25o-f5-Up9"/>
+                        <segue destination="a5O-F4-qt0" kind="show" identifier="courseListRowSelected" id="KPQ-cI-ZGh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FET-aX-3Uj" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -480,4 +525,7 @@
             <point key="canvasLocation" x="-802" y="-200"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="firat.jpg" width="320" height="320"/>
+    </resources>
 </document>

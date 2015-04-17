@@ -1,5 +1,4 @@
 
-
 import UIKit
 
 class DetailedCourseListViewController: UIViewController,UITableViewDelegate {

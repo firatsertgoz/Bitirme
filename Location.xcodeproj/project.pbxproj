@@ -34,6 +34,10 @@
 		F16A42B01AAA60020028C441 /* SwiftSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16A42AC1AAA60020028C441 /* SwiftSpinner.swift */; };
 		F16A42B21AAA604E0028C441 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16A42B11AAA604E0028C441 /* SwiftyJSON.swift */; };
 		F16A42B41AAA606B0028C441 /* CourseListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16A42B31AAA606B0028C441 /* CourseListViewController.swift */; };
+		F16D869C1AE157B40018569C /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F16D869B1AE157640018569C /* Charts.framework */; };
+		F16D869E1AE178740018569C /* firat.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F16D869D1AE178740018569C /* firat.jpg */; };
+		F16D86A01AE17DB60018569C /* AF+ImageVIew+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16D869F1AE17DB60018569C /* AF+ImageVIew+Extension.swift */; };
+		F16D86A21AE17E0D0018569C /* AF+Image+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16D86A11AE17E0D0018569C /* AF+Image+Extension.swift */; };
 		F1A15EAF1ADAD42900056BCF /* PNBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A15EAD1ADAD42900056BCF /* PNBar.swift */; };
 		F1A15EB01ADAD42900056BCF /* PNBarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A15EAE1ADAD42900056BCF /* PNBarChart.swift */; };
 		F1A15EB51ADAD43800056BCF /* PNChartConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A15EB11ADAD43800056BCF /* PNChartConfig.swift */; };
@@ -53,6 +57,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = F118458B1A2B42FF005B5DAC;
 			remoteInfo = Location;
+		};
+		F16D869A1AE157640018569C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F16D86961AE157640018569C /* Charts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5BA8EC401A9D14DC00CE82E1;
+			remoteInfo = Charts;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -106,6 +117,10 @@
 		F16A42AC1AAA60020028C441 /* SwiftSpinner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftSpinner.swift; sourceTree = "<group>"; };
 		F16A42B11AAA604E0028C441 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		F16A42B31AAA606B0028C441 /* CourseListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseListViewController.swift; sourceTree = "<group>"; };
+		F16D86961AE157640018569C /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = "../../../Desktop/ios-charts-master/Charts/Charts.xcodeproj"; sourceTree = "<group>"; };
+		F16D869D1AE178740018569C /* firat.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = firat.jpg; sourceTree = "<group>"; };
+		F16D869F1AE17DB60018569C /* AF+ImageVIew+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AF+ImageVIew+Extension.swift"; sourceTree = "<group>"; };
+		F16D86A11AE17E0D0018569C /* AF+Image+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AF+Image+Extension.swift"; sourceTree = "<group>"; };
 		F1A15EAD1ADAD42900056BCF /* PNBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PNBar.swift; sourceTree = "<group>"; };
 		F1A15EAE1ADAD42900056BCF /* PNBarChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PNBarChart.swift; sourceTree = "<group>"; };
 		F1A15EB11ADAD43800056BCF /* PNChartConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PNChartConfig.swift; sourceTree = "<group>"; };
@@ -123,6 +138,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F16D869C1AE157B40018569C /* Charts.framework in Frameworks */,
 				F14115961ABC86F100B0AF2F /* CoreTelephony.framework in Frameworks */,
 				F14115901ABC86B500B0AF2F /* Accelerate.framework in Frameworks */,
 				F14115911ABC86B500B0AF2F /* AudioToolbox.framework in Frameworks */,
@@ -171,8 +187,11 @@
 				F16A42AB1AAA60020028C441 /* DetailedDashboardViewController.swift */,
 				F16A42AC1AAA60020028C441 /* SwiftSpinner.swift */,
 				F11845911A2B42FF005B5DAC /* AppDelegate.swift */,
+				F16D86A11AE17E0D0018569C /* AF+Image+Extension.swift */,
+				F16D869F1AE17DB60018569C /* AF+ImageVIew+Extension.swift */,
 				F11845951A2B42FF005B5DAC /* Main.storyboard */,
 				F11845981A2B42FF005B5DAC /* Images.xcassets */,
+				F16D869D1AE178740018569C /* firat.jpg */,
 				F118459A1A2B42FF005B5DAC /* LaunchScreen.xib */,
 				7161700B1A895C53004CF6F7 /* HTTPHelper.swift */,
 				7161700D1A895E51004CF6F7 /* KeyChainAccess.swift */,
@@ -189,6 +208,7 @@
 				F1A15EB91ADAE05400056BCF /* PNChartLabel.swift */,
 				F1A15EBA1ADAE05400056BCF /* PNLineChart.swift */,
 				F1A15EBB1ADAE05400056BCF /* PNLineChartData.swift */,
+				F16D86961AE157640018569C /* Charts.xcodeproj */,
 				F118458F1A2B42FF005B5DAC /* Supporting Files */,
 				F11D165D1A9A5C960035330A /* AESCrypt */,
 			);
@@ -241,6 +261,14 @@
 				F11D16651A9A5C960035330A /* NSString+Base64.m */,
 			);
 			path = AESCrypt;
+			sourceTree = "<group>";
+		};
+		F16D86971AE157640018569C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F16D869B1AE157640018569C /* Charts.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -311,6 +339,12 @@
 			mainGroup = F11845831A2B42FF005B5DAC;
 			productRefGroup = F118458D1A2B42FF005B5DAC /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = F16D86971AE157640018569C /* Products */;
+					ProjectRef = F16D86961AE157640018569C /* Charts.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				F118458B1A2B42FF005B5DAC /* Location */,
@@ -319,6 +353,16 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		F16D869B1AE157640018569C /* Charts.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Charts.framework;
+			remoteRef = F16D869A1AE157640018569C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXResourcesBuildPhase section */
 		F118458A1A2B42FF005B5DAC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
@@ -326,6 +370,7 @@
 			files = (
 				F11845971A2B42FF005B5DAC /* Main.storyboard in Resources */,
 				F118459C1A2B42FF005B5DAC /* LaunchScreen.xib in Resources */,
+				F16D869E1AE178740018569C /* firat.jpg in Resources */,
 				F11845991A2B42FF005B5DAC /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -344,6 +389,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F16D86A21AE17E0D0018569C /* AF+Image+Extension.swift in Sources */,
 				F102EF8A1AC0614D007357C1 /* CustomNavigationController.swift in Sources */,
 				F1A15EB81ADAD43800056BCF /* view.swift in Sources */,
 				F1A15EBE1ADAE05400056BCF /* PNLineChartData.swift in Sources */,
@@ -352,6 +398,7 @@
 				F1A15EAF1ADAD42900056BCF /* PNBar.swift in Sources */,
 				F1A15EBC1ADAE05400056BCF /* PNChartLabel.swift in Sources */,
 				F16A42B41AAA606B0028C441 /* CourseListViewController.swift in Sources */,
+				F16D86A01AE17DB60018569C /* AF+ImageVIew+Extension.swift in Sources */,
 				7161700C1A895C53004CF6F7 /* HTTPHelper.swift in Sources */,
 				F11D16661A9A5C960035330A /* AESCrypt.m in Sources */,
 				F11D16671A9A5C960035330A /* NSData+Base64.m in Sources */,
@@ -500,6 +547,7 @@
 				INFOPLIST_FILE = Location/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				New_Setting = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/firat/Documents/Developer/Bitirme/Location/AES-Bridging-Header.h";
 				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "/Users/bcanvural/Documents/Bitirme/Location/AES-Bridging-Header.h";
@@ -518,6 +566,7 @@
 				INFOPLIST_FILE = Location/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				New_Setting = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/firat/Documents/Developer/Bitirme/Location/AES-Bridging-Header.h";
 				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "/Users/bcanvural/Documents/Bitirme/Location/AES-Bridging-Header.h";
