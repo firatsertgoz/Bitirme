@@ -12,7 +12,6 @@ class CourseListViewController: UIViewController, UITableViewDelegate,ChartViewD
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var studentImage: UIImageView!
     @IBOutlet weak var greetingLabel: UILabel!
-    @IBOutlet weak var scrollView: UIScrollView!
     var receivedJSON = JSON([])
     
     let httpHelper = HTTPHelper()
@@ -22,10 +21,6 @@ class CourseListViewController: UIViewController, UITableViewDelegate,ChartViewD
         println(self.receivedJSON)
         tableView.rowHeight = 150
        // tableView.separatorColor = UIColor.clearColor()
-        
-        
-        
-        
       //  var refreshControl = UIRefreshControl()
       //  refreshControl.addTarget(self, action: <#Selector#>, forControlEvents: <#UIControlEvents#>)
         studentImage.image = studentImage.image?.roundCornersToCircle(border: 10, color: UIColor.grayColor())
@@ -84,9 +79,9 @@ class CourseListViewController: UIViewController, UITableViewDelegate,ChartViewD
         
         pie.centerText = "%"+centerText
         
-        var entry : BarChartDataEntry = BarChartDataEntry(value: Float(centerText.toInt()!), xIndex: 0)
+        var entry : BarChartDataEntry = BarChartDataEntry(value: centerText.floatValue, xIndex: 0)
         
-        var complement : BarChartDataEntry = BarChartDataEntry(value:Float(100 - centerText.toInt()!), xIndex:1)
+        var complement : BarChartDataEntry = BarChartDataEntry(value:100 - centerText.floatValue, xIndex:1)
         var yValues = [entry,complement]
         
         var dataSet : PieChartDataSet = PieChartDataSet(yVals: yValues)

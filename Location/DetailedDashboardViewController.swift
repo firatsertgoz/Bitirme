@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import Charts
 
-class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,PNChartDelegate{
+class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,ChartViewDelegate{
     
     var rowNumber = 0;
     let httpHelper = HTTPHelper()
@@ -28,45 +29,17 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
     var graphWeekArr : [Dictionary<String, AnyObject>] = []
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var graph: HorizontalBarChartView!
     
-   
-    @IBOutlet weak var barChart: PNBarChart!
-    
-  
-    
-
-    
-  
     override func viewWillAppear(animated: Bool) {
         self.navigationItem.title = "Attendance"
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Do any additional setup after loading the view.
-        barChart.backgroundColor = UIColor.clearColor()
-        //            barChart.yLabelFormatter = ({(yValue: CGFloat) -> NSString in
-        //                var yValueParsed:CGFloat = yValue
-        //                var labelText:NSString = NSString(format:"%1.f",yValueParsed)
-        //                return labelText;
-        //            })
-        
-        
-        // remove for default animation (all bars animate at once)
-        barChart.animationType = .Waterfall
-        
-        
-        
-        
-        
-        barChart.delegate = self
-        
-        
         get_attendees()
         get_attendance_count_for_graph(0)
-        
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -110,7 +83,7 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
                     self.graphDataOverall = receivedJSON
                     self.writeGraphJsonToArrOfDict(receivedJSON, arrDict: &self.graphOverallArr)
                     self.sortArrayByDate(&self.graphOverallArr)
-                    self.drawGraph(0)
+                   // self.drawGraph(0)
                 case (1):
                     self.graphDataMonth = receivedJSON
                     self.writeGraphJsonToArrOfDict(receivedJSON, arrDict: &self.graphMonthArr)
@@ -129,62 +102,53 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
     }
     
     func drawGraph(option:Int){
-        
         if(option==0){
-          
-            var xValues:NSMutableArray = []
-            var yValues:NSMutableArray = []
-            for(var i = 0;i<self.graphOverallArr.count;i++){
-                var day = self.graphOverallArr[i]["day"] as! String
-                var time = substr((self.graphOverallArr[i]["start_time"] as! String),start: 11,end: 16)
-                var count: Int! = (self.graphOverallArr[i]["total_attendance_count"] as! String).toInt()
-                xValues.addObject((day+" "+time))
-    
-                yValues.addObject(count)
-                //self.graphOverallArr[i]["total_attendance_count"]
-            }
-            barChart.xLabels = xValues
-            barChart.yValues = yValues
-            let totalLectures: Int! = (self.atendeesArr[0]["total_lectures"] as! String).toInt()
-            barChart.yValueMax = intToCGFloat(totalLectures)
-        
-            barChart.strokeChart()
-        } else if (option==1){
+            graph.delegate = self
             
-            barChart.xLabels = ["SEP 1","SEP 2","SEP 3","SEP 4","SEP 5","SEP 6","SEP 7"]
-            barChart.yValues = [1,24,12,18,30,10,21]
-            barChart.strokeChart()
-        } else {
+        } else if(option==1){
             
-            barChart.xLabels = ["SEP 1","SEP 2","SEP 3","SEP 4","SEP 5","SEP 6","SEP 7"]
-            barChart.yValues = [1,24,12,18,30,10,21]
-            barChart.strokeChart()
+        } else if(option==2){
             
         }
-        
-        
-        
     }
     
-
-        
-        
-    
-    
-    func userClickedOnLineKeyPoint(point: CGPoint, lineIndex: Int, keyPointIndex: Int)
-    {
-        println("Click Key on line \(point.x), \(point.y) line index is \(lineIndex) and point index is \(keyPointIndex)")
-    }
-    
-    func userClickedOnLinePoint(point: CGPoint, lineIndex: Int)
-    {
-        println("Click Key on line \(point.x), \(point.y) line index is \(lineIndex)")
-    }
-    
-    func userClickedOnBarCharIndex(barIndex: Int)
-    {
-        println("Click  on bar \(barIndex)")
-    }
+//    func drawGraph(option:Int){
+//        
+//        if(option==0){
+//          
+//            var xValues:NSMutableArray = []
+//            var yValues:NSMutableArray = []
+//            for(var i = 0;i<self.graphOverallArr.count;i++){
+//                var day = self.graphOverallArr[i]["day"] as! String
+//                var time = substr((self.graphOverallArr[i]["start_time"] as! String),start: 11,end: 16)
+//                var count: Int! = (self.graphOverallArr[i]["total_attendance_count"] as! String).toInt()
+//                xValues.addObject((day+" "+time))
+//    
+//                yValues.addObject(count)
+//                //self.graphOverallArr[i]["total_attendance_count"]
+//            }
+//            barChart.xLabels = xValues
+//            barChart.yValues = yValues
+//            let totalLectures: Int! = (self.atendeesArr[0]["total_lectures"] as! String).toInt()
+//            barChart.yValueMax = intToCGFloat(totalLectures)
+//        
+//            barChart.strokeChart()
+//        } else if (option==1){
+//            
+//            barChart.xLabels = ["SEP 1","SEP 2","SEP 3","SEP 4","SEP 5","SEP 6","SEP 7"]
+//            barChart.yValues = [1,24,12,18,30,10,21]
+//            barChart.strokeChart()
+//        } else {
+//            
+//            barChart.xLabels = ["SEP 1","SEP 2","SEP 3","SEP 4","SEP 5","SEP 6","SEP 7"]
+//            barChart.yValues = [1,24,12,18,30,10,21]
+//            barChart.strokeChart()
+//            
+//        }
+//        
+//        
+//        
+//    }
 
     func get_attendees() {
         
@@ -208,7 +172,6 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
             }
         })
     }
-    
     
     func getRowCount() -> Int {
         var set:Set<String> = Set<String>()

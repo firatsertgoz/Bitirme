@@ -1,4 +1,44 @@
 //
+//  DateExtension.swift
+//  Location
+//
+//  Created by Baris Can Vural on 4/11/15.
+//  Copyright (c) 2015 Baris Can Vural. All rights reserved.
+//
+
+import Foundation
+
+
+extension NSDate
+{
+    convenience
+      init(dateString:String) {
+      let dateStringFormatter = NSDateFormatter()
+      dateStringFormatter.dateFormat = "yyyy-MM-dd"
+      dateStringFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+      let d = dateStringFormatter.dateFromString(dateString)
+      self.init(timeInterval:0, sinceDate:d!)
+    }
+ }
+
+extension String {
+    var floatValue: Float {
+      
+        return (self as NSString).floatValue
+    }
+    
+    //Swift substring
+    func substr(str:String,start:Int,end:Int) -> String {
+        let rangeOfStr = Range(start: advance(str.startIndex,start),
+            end: advance(str.startIndex, end))
+        let lastStr = str.substringWithRange(rangeOfStr)
+        return lastStr
+    }
+}
+
+
+
+//
 //  AF+Image+Extension.swift
 //
 //  Version 1.04
@@ -197,7 +237,7 @@ extension UIImage {
         var transparentImage = UIImage(CGImage: CGImageCreateWithMask(CGBitmapContextCreateImage(context), imageRefWithPadding(padding, size: rect.size)))
         return transparentImage
     }
-
+    
     // Creates a mask that makes the outer edges transparent and everything else opaque
     // The size must include the entire mask (opaque part + transparent border)
     // The caller is responsible for releasing the returned reference by calling CGImageRelease
@@ -218,7 +258,7 @@ extension UIImage {
         return maskImageRef
     }
     
-
+    
     // MARK: Crop
     
     func crop(bounds: CGRect) -> UIImage?
@@ -244,12 +284,12 @@ extension UIImage {
         var ratio: CGFloat!
         
         switch contentMode {
-            case .ScaleToFill:
-                ratio = 1
-            case .ScaleAspectFill:
-                ratio = max(horizontalRatio, verticalRatio)
-            case .ScaleAspectFit:
-                ratio = min(horizontalRatio, verticalRatio)
+        case .ScaleToFill:
+            ratio = 1
+        case .ScaleAspectFill:
+            ratio = max(horizontalRatio, verticalRatio)
+        case .ScaleAspectFit:
+            ratio = min(horizontalRatio, verticalRatio)
         }
         
         let rect = CGRect(x: 0, y: 0, width: self.size.width * ratio, height: self.size.height * ratio)
@@ -271,7 +311,7 @@ extension UIImage {
         
         
         //CGContextSetInterpolationQuality(context, CGInterpolationQuality(kCGInterpolationHigh.value))
-                
+        
         // Draw into the context; this scales the image
         CGContextDrawImage(context, rect, self.CGImage)
         
@@ -279,7 +319,7 @@ extension UIImage {
         var newImage = UIImage(CGImage: CGBitmapContextCreateImage(context))
         return newImage;
     }
-
+    
     
     // MARK: Corner Radius
     
@@ -399,5 +439,50 @@ extension UIImage {
         }
         return placeholder
     }
-   
+    
 }
+
+
+//
+//  AF+ImageView+Extension.swift
+//
+//  Version 1.04
+//
+//  Created by Melvin Rivera on 7/23/14.
+//  Copyright (c) 2014 All Forces. All rights reserved.
+//
+
+
+
+extension UIImageView {
+    
+    func imageFromURL(url: String, placeholder: UIImage, fadeIn: Bool = true, closure: ((image: UIImage?) -> ())? = nil)
+    {
+        self.image = UIImage.imageFromURL(url, placeholder: placeholder, shouldCacheImage: true) {
+            (image: UIImage?) in
+            if image == nil {
+                return
+            }
+            if fadeIn {
+                let crossFade = CABasicAnimation(keyPath: "contents")
+                crossFade.duration = 0.5
+                crossFade.fromValue = self.image?.CIImage
+                crossFade.toValue = image!.CGImage
+                self.layer.addAnimation(crossFade, forKey: "")
+            }
+            if let foundClosure = closure {
+                foundClosure(image: image)
+            }
+            self.image = image
+        }
+    }
+    
+    
+}
+
+
+
+
+
+
+
