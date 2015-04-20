@@ -19,21 +19,32 @@ extension NSDate
       let d = dateStringFormatter.dateFromString(dateString)
       self.init(timeInterval:0, sinceDate:d!)
     }
+    
+    class func getCurrentTime() -> String {
+        var formatter = NSDateFormatter()
+        formatter.dateFormat = "HH:mm"
+        return formatter.stringFromDate(NSDate())
+    }
+    
  }
 
 extension String {
-    var floatValue: Float {
-      
+    var floatValue: Float! {
         return (self as NSString).floatValue
     }
     
     //Swift substring
-    func substr(str:String,start:Int,end:Int) -> String {
-        let rangeOfStr = Range(start: advance(str.startIndex,start),
-            end: advance(str.startIndex, end))
-        let lastStr = str.substringWithRange(rangeOfStr)
+    func substr(start:Int,end:Int) -> String {
+        let rangeOfStr = Range(start: advance(self.startIndex,start),
+            end: advance(self.startIndex, end))
+        let lastStr = self.substringWithRange(rangeOfStr)
         return lastStr
     }
+    
+    func getTimeFromDateString() -> String {
+        return self.substr(11,end:16)
+    }
+    
 }
 
 

@@ -44,7 +44,7 @@ class DetailedCourseListViewController: UIViewController,UITableViewDelegate {
        // cell.textLabel?.text = self.json[indexPath!.row][1].description
         var str : String = self.json[indexPath!.row]["created_at"].stringValue
         var newString = str.stringByReplacingOccurrencesOfString("T", withString: " ", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        newString = substr(newString,start:0,end:16)
+        newString = newString.substr(0,end:16)
         cell.textLabel?.text = newString
         return cell
     }
@@ -104,14 +104,6 @@ class DetailedCourseListViewController: UIViewController,UITableViewDelegate {
         self.weeksLabel.text = "Week \(String(weeks))"
     }
     
-    //Swift substring
-    func substr(str:String,start:Int,end:Int) -> String {
-        let rangeOfStr = Range(start: advance(str.startIndex,start),
-            end: advance(str.startIndex, end))
-        let lastStr = str.substringWithRange(rangeOfStr)
-        return lastStr
-    }
-
     func updateTableView(){
         self.tableView.reloadData()
         self.totalAttendanceLabel.text = "Total Attendances: \(self.rowCount)"

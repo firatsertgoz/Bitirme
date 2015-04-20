@@ -234,8 +234,8 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
         if(  day1 < day2) {
             return 0
         } else if (day1==day2){
-            var time1 = substr(dic1["start_time"] as! String,start: 11,end: 16)
-            var time2 = substr(dic2["start_time"] as! String,start: 11,end: 16)
+            var time1 = (dic1["start_time"] as! String).substr(11,end: 16)
+            var time2 = (dic2["start_time"] as! String).substr(11,end: 16)
             if( time1 < time2 ){
                 return 0
             } else if (time1==time2){
@@ -257,16 +257,6 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
             count++
         }
         return -1
-    }
-    
-   
-    
-    //Swift substring
-    func substr(str:String,start:Int,end:Int) -> String {
-        let rangeOfStr = Range(start: advance(str.startIndex,start),
-            end: advance(str.startIndex, end))
-        let lastStr = str.substringWithRange(rangeOfStr)
-        return lastStr
     }
     
     func intToCGFloat(value:Int) -> CGFloat {

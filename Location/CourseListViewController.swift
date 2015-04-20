@@ -15,6 +15,7 @@ class CourseListViewController: UIViewController, UITableViewDelegate,ChartViewD
     var receivedJSON = JSON([])
     
     let httpHelper = HTTPHelper()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.getCourses()

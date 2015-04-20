@@ -69,6 +69,7 @@ class LogInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -190,6 +191,7 @@ class LogInViewController: UIViewController {
         Blesh.sharedInstance().didCloseCampaignView =
             { (NSString valueType, NSString value) -> Void in
                 println("Campaign closed")
+                Attendance.registerBeaconInfo(value)
             }
         
         //check whether the user is a student or an instructor
