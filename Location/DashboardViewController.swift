@@ -15,6 +15,7 @@ class DashboardViewController: UIViewController,UITableViewDelegate {
     let httpHelper = HTTPHelper()
     var json = JSON([])
     var selectedCourseId : Int?
+    var termStartDate : String?
     
     // Disable navigation bar
     override func viewWillAppear(animated:Bool){
@@ -35,16 +36,13 @@ class DashboardViewController: UIViewController,UITableViewDelegate {
         getCourses()
     }
     
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return rowNumber
-        
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -54,7 +52,7 @@ class DashboardViewController: UIViewController,UITableViewDelegate {
         cell.textLabel?.text = self.json[indexPath.row]["course"]["name"].stringValue
         return cell
     }
-    
+
     func getCourses(){
         // HTTP Request
         let httpRequest = httpHelper.buildRequest("get_courses", method: "GET", authType: HTTPRequestAuthType.HTTPTokenAuth)
@@ -75,13 +73,6 @@ class DashboardViewController: UIViewController,UITableViewDelegate {
         })
     }
     
-    func displayAlertMessage(alertTitle:NSString, alertDescription:NSString) -> Void {
-        // hide activityIndicator view and display alert message
-        //self.activityIndicatorView.hidden = true
-        let errorAlert = UIAlertView(title:alertTitle as String, message:alertDescription as String, delegate:nil, cancelButtonTitle:"OK")
-        errorAlert.show()
-    }
-    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let targetView = self.storyboard?.instantiateViewControllerWithIdentifier("DetailedDashboard") as! DetailedDashboardViewController
@@ -92,20 +83,5 @@ class DashboardViewController: UIViewController,UITableViewDelegate {
         let customNav = self.navigationController as! CustomNavigationController
         customNav.DashboardViewController_selectedCourseId = self.selectedCourseId
         self.navigationController?.performSegueWithIdentifier("DashboardToDetailed", sender: self)
-    }
-    
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-        
-        if (segue.identifier == "DashboardToDetailed") {
-            let navController = segue.destinationViewController as! UINavigationController
-            let destinationView = navController.topViewController as! DetailedDashboardViewController
-         //   let destinationView = segue.destinationViewController as DetailedDashboardViewController
-            destinationView.courseId = self.selectedCourseId!
-        }
     }
 }

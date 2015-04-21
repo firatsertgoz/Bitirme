@@ -15,6 +15,7 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
     let httpHelper = HTTPHelper()
     var courseId : Int!
     var GraphOption = 0
+    var termStartDate : String!
     
     var names : NSMutableArray = []
     
@@ -38,6 +39,7 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        println("Term start date:\(self.termStartDate)")
         get_attendees()
         get_attendance_count_for_graph(0)
     }
@@ -55,7 +57,7 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
         var cell:DetailedDashboardCell = self.tableView.dequeueReusableCellWithIdentifier("DetailedDashboardCell") as! DetailedDashboardCell
         cell.selectionStyle = .None //don't highlight when selected
         cell.textLabel?.text = self.atendeesData![indexPath.row]["created_at"].stringValue
-        cell.nameLabel.text = self.names[indexPath.row] as! String
+        cell.nameLabel.text? = self.names[indexPath.row] as! String
         return cell
     }
     
@@ -83,7 +85,7 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
                     self.graphDataOverall = receivedJSON
                     self.writeGraphJsonToArrOfDict(receivedJSON, arrDict: &self.graphOverallArr)
                     self.sortArrayByDate(&self.graphOverallArr)
-                   // self.drawGraph(0)
+                    self.drawGraph(0)
                 case (1):
                     self.graphDataMonth = receivedJSON
                     self.writeGraphJsonToArrOfDict(receivedJSON, arrDict: &self.graphMonthArr)
@@ -103,7 +105,29 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
     
     func drawGraph(option:Int){
         if(option==0){
-            graph.delegate = self
+            setGraphSettings()
+            var xValues  = [String]()
+            var yValues = [ChartDataEntry]()
+            for(var i = 0;i<graphOverallArr.count;i++){
+                var x :String = (graphOverallArr[i]["day"] as! String) + " " + (graphOverallArr[i]["start_time"] as! String).substr(11,end: 16)
+                var y : String = (graphOverallArr[i]["total_attendance_count"] as! String)
+                xValues.append(x)
+                yValues.append(BarChartDataEntry(value: y.floatValue, xIndex: i))
+            }
+            
+            var set : BarChartDataSet = BarChartDataSet(yVals:yValues,label:"")
+            set.barSpace = 0.35
+            
+            var dataSets  = [BarChartDataSet]()
+            dataSets.append(set)
+            var data : BarChartData = BarChartData(xVals: xValues, dataSets: dataSets)
+            
+            graph.leftAxis.customAxisMax = graphOverallArr[0]["total_weeks"]!.floatValue
+            
+            graph.data = data
+            
+            
+            
             
         } else if(option==1){
             
@@ -112,10 +136,59 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
         }
     }
     
+    
+    
+    
+    func setGraphSettings(){
+        
+        graph.delegate = self
+        graph.descriptionText = ""
+        graph.noDataTextDescription = "No data yet"
+        graph.drawBarShadowEnabled = true
+        graph.drawValueAboveBarEnabled = true
+        graph.maxVisibleValueCount = 60
+        graph.pinchZoomEnabled = false
+        graph.drawGridBackgroundEnabled = false
+        
+        
+        
+        var xAxis : ChartXAxis = graph.xAxis
+        xAxis.labelPosition = ChartXAxis.XAxisLabelPosition.Bottom
+        xAxis.labelFont = UIFont.systemFontOfSize(10)
+        xAxis.drawAxisLineEnabled = true
+        xAxis.drawGridLinesEnabled = true
+        xAxis.gridLineWidth = 0.3
+        
+        var leftAxis : ChartYAxis = graph.leftAxis
+        leftAxis.labelFont = UIFont.systemFontOfSize(10)
+        leftAxis.drawAxisLineEnabled = true
+        leftAxis.drawGridLinesEnabled = true
+        leftAxis.gridLineWidth = 0.3
+
+        
+        var rightAxis : ChartYAxis = graph.rightAxis
+        rightAxis.labelFont = UIFont.systemFontOfSize(10)
+        rightAxis.drawAxisLineEnabled = true
+        rightAxis.drawGridLinesEnabled = false
+        rightAxis.enabled = false
+        
+        
+        
+        
+        graph.legend.position = ChartLegend.ChartLegendPosition.BelowChartLeft
+        graph.legend.form = ChartLegend.ChartLegendForm.Square
+        graph.legend.formSize = 8
+        graph.legend.font = UIFont(name:"HelveticaNeue-light", size:11)!
+        graph.legend.xEntrySpace = 4
+        graph.legend.enabled = false
+        
+        graph.animate(yAxisDuration: 2.5)
+    }
+    
 //    func drawGraph(option:Int){
-//        
+//
 //        if(option==0){
-//          
+//
 //            var xValues:NSMutableArray = []
 //            var yValues:NSMutableArray = []
 //            for(var i = 0;i<self.graphOverallArr.count;i++){
@@ -151,7 +224,6 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
 //    }
 
     func get_attendees() {
-        
         // HTTP Request
         let httpRequest = httpHelper.buildRequest("get_attendees_by_course_id?course_id=\(self.courseId)", method: "GET", authType: HTTPRequestAuthType.HTTPTokenAuth)
         //httpRequest.HTTPBody = "{\"course_id\":\"\(self.courseId)\"}".dataUsingEncoding(NSUTF8StringEncoding)
@@ -196,14 +268,13 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
         for(var i=0;i<json.count;i++){
             arrDict.append(["day":json[i]["day"].stringValue,
                 "start_time":json[i]["start_time"].stringValue,
-                "total_attendance_count" : json[i]["total_attendance_count"].stringValue
+                "total_attendance_count" : json[i]["total_attendance_count"].stringValue,
+                "total_weeks" : json[i]["total_weeks"].stringValue
                 ])
         }
     }
     
     func sortArrayByDate(inout arrDict: [Dictionary<String, AnyObject>]) {
-        
-       
         var x, y : Int
         var key : Dictionary<String,AnyObject>
         
@@ -263,9 +334,6 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
         let f : CGFloat = CGFloat(value)
         return f
     }
-    
-    
-    
 }
 
 class DetailedDashboardCell: UITableViewCell {

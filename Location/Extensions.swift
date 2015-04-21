@@ -26,6 +26,22 @@ extension NSDate
         return formatter.stringFromDate(NSDate())
     }
     
+    class func getCurrentDay() -> String {
+        let calender = NSCalendar.currentCalendar()
+        let components = calender.components(NSCalendarUnit.WeekdayCalendarUnit,fromDate:NSDate());
+        let daysDic = [
+            2:"Monday",
+            3:"Tuesday",
+            4:"Wednesday",
+            5:"Thursday",
+            6:"Friday",
+            7:"Saturday",
+            1:"Sunday"
+        ]
+        return daysDic[components.weekday]!
+    }
+
+    
  }
 
 extension String {
@@ -45,9 +61,7 @@ extension String {
         return self.substr(11,end:16)
     }
     
-}
-
-
+  }
 
 //
 //  AF+Image+Extension.swift

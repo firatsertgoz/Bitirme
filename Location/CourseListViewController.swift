@@ -2,7 +2,6 @@
 import UIKit
 import Charts
 
-
 class CourseListViewController: UIViewController, UITableViewDelegate,ChartViewDelegate {
     
     var rowNumber = 0
@@ -20,6 +19,7 @@ class CourseListViewController: UIViewController, UITableViewDelegate,ChartViewD
         super.viewDidLoad()
         self.getCourses()
         println(self.receivedJSON)
+
         tableView.rowHeight = 150
        // tableView.separatorColor = UIColor.clearColor()
       //  var refreshControl = UIRefreshControl()
@@ -27,6 +27,24 @@ class CourseListViewController: UIViewController, UITableViewDelegate,ChartViewD
         studentImage.image = studentImage.image?.roundCornersToCircle(border: 10, color: UIColor.grayColor())
         greetingLabel.text = "Welcome, "+receivedJSON["first_name"].stringValue
         
+    }
+   func makeAttendanceRequest(ceId:Int){
+        var httpHelper = HTTPHelper()
+        // HTTP Request
+        let httpRequest = httpHelper.buildRequest("attend", method: "POST", authType: HTTPRequestAuthType.HTTPTokenAuth)
+        httpRequest.HTTPBody = "{\"course_entity_id\":\"\(ceId)\"}".dataUsingEncoding(NSUTF8StringEncoding)
+        httpHelper.sendRequest(httpRequest, completion: { (data:NSData!, error:NSError!) -> Void in
+            //display error
+            if error != nil {
+                let errorMessage = httpHelper.getErrorMessage(error)
+            }
+            else {
+                var jsonerror:NSError?
+                var response = JSON(data: data)
+                println("Attendance response")
+                println(response)
+            }
+        })
     }
     
     // Disable navigation bar

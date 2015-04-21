@@ -65,11 +65,13 @@ class LogInViewController: UIViewController {
         if (email != nil && password != nil && auth_token != nil) {
             makeSignInRequest(email!, userPassword: password!)
         }
+
     }
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -174,10 +176,6 @@ class LogInViewController: UIViewController {
     func toTheNextView(){
         
         getCourseEntities()
-    
-       
-       
-       
         //init blesh
         Blesh.sharedInstance().initBleshWithAPIUser(
             "firat.sertgoz",
