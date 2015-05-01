@@ -1,10 +1,3 @@
-//
-//  DetailedDashboardViewController.swift
-//  Location
-//
-//  Created by Baris Can Vural on 3/6/15.
-//  Copyright (c) 2015 Baris Can Vural. All rights reserved.
-//
 
 import UIKit
 import Charts
@@ -30,7 +23,12 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
     var graphWeekArr : [Dictionary<String, AnyObject>] = []
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var graph: HorizontalBarChartView!
+    
+    var headerCtrl: TableHeaderViewController!
+    var graph: HorizontalBarChartView!
+    var overallBtn: UIButton!
+    var monthBtn: UIButton!
+    var weekBtn: UIButton!
     
     override func viewWillAppear(animated: Bool) {
         self.navigationItem.title = "Attendance"
@@ -38,10 +36,47 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        headerViewSetup()
+        setGraphSettings()
+        
         println("Term start date:\(self.termStartDate)")
         get_attendees()
         get_attendance_count_for_graph(0)
+    }
+    func headerViewSetup(){
+        headerCtrl = TableHeaderViewController(viewController:self)
+        graph = headerCtrl.graph
+        overallBtn = headerCtrl.overallBtn
+        monthBtn = headerCtrl.monthBtn
+        weekBtn = headerCtrl.weekBtn
+        tableView.tableHeaderView = headerCtrl.mainView
+        
+        overallBtn.addTarget(self, action: "overallClicked", forControlEvents: UIControlEvents.TouchUpInside)
+        monthBtn.addTarget(self, action: "monthClicked", forControlEvents: UIControlEvents.TouchUpInside)
+        weekBtn.addTarget(self, action: "weekClicked", forControlEvents: UIControlEvents.TouchUpInside)
+    }
+    
+    func overallClicked(){
+        if(graphOverallArr.count==0){
+            get_attendance_count_for_graph(0)
+        } else {
+            drawGraph(0)
+        }
+    }
+    func monthClicked(){
+        if(graphMonthArr.count==0){
+        get_attendance_count_for_graph(1)
+        } else {
+            drawGraph(1)
+        }
+    }
+    func weekClicked(){
+        println("weekClicked")
+        if(graphWeekArr.count==0){
+            get_attendance_count_for_graph(2)
+        } else {
+            drawGraph(2)
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -90,10 +125,12 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
                     self.graphDataMonth = receivedJSON
                     self.writeGraphJsonToArrOfDict(receivedJSON, arrDict: &self.graphMonthArr)
                     self.sortArrayByDate(&self.graphMonthArr)
+                    self.drawGraph(1)
                 case (2):
                     self.graphDataWeek = receivedJSON
                     self.writeGraphJsonToArrOfDict(receivedJSON, arrDict: &self.graphWeekArr)
                     self.sortArrayByDate(&self.graphWeekArr)
+                    self.drawGraph(2)
                 default:
                     println("Option invalid")
                 }
@@ -105,39 +142,32 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
     
     func drawGraph(option:Int){
         if(option==0){
-            setGraphSettings()
-            var xValues  = [String]()
-            var yValues = [ChartDataEntry]()
-            for(var i = 0;i<graphOverallArr.count;i++){
-                var x :String = (graphOverallArr[i]["day"] as! String) + " " + (graphOverallArr[i]["start_time"] as! String).substr(11,end: 16)
-                var y : String = (graphOverallArr[i]["total_attendance_count"] as! String)
-                xValues.append(x)
-                yValues.append(BarChartDataEntry(value: y.floatValue, xIndex: i))
-            }
-            
-            var set : BarChartDataSet = BarChartDataSet(yVals:yValues,label:"")
-            set.barSpace = 0.35
-            
-            var dataSets  = [BarChartDataSet]()
-            dataSets.append(set)
-            var data : BarChartData = BarChartData(xVals: xValues, dataSets: dataSets)
-            
-            graph.leftAxis.customAxisMax = graphOverallArr[0]["total_weeks"]!.floatValue
-            
-            graph.data = data
-            
-            
-            
-            
+            addGraphData(graphOverallArr)
         } else if(option==1){
-            
+            addGraphData(graphMonthArr)
         } else if(option==2){
-            
+            addGraphData(graphWeekArr)
         }
     }
     
-    
-    
+    func addGraphData(arr:[Dictionary<String, AnyObject>]){
+        var xValues  = [String]()
+        var yValues = [ChartDataEntry]()
+        for(var i = 0;i<arr.count;i++){
+            var x :String = (arr[i]["day"] as! String) + " " + (arr[i]["start_time"] as! String).substr(11,end: 16)
+            var y : String = (arr[i]["total_attendance_count"] as! String)
+            xValues.append(x)
+            yValues.append(BarChartDataEntry(value: y.floatValue, xIndex: i))
+        }
+        var set : BarChartDataSet = BarChartDataSet(yVals:yValues,label:"")
+        set.barSpace = 0.35
+        var dataSets  = [BarChartDataSet]()
+        dataSets.append(set)
+        var data : BarChartData = BarChartData(xVals: xValues, dataSets: dataSets)
+        graph.leftAxis.customAxisMax = arr[0]["total_weeks"]!.floatValue
+        graph.data = data
+        graph.animate(yAxisDuration: 1)
+    }
     
     func setGraphSettings(){
         
@@ -149,7 +179,8 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
         graph.maxVisibleValueCount = 60
         graph.pinchZoomEnabled = false
         graph.drawGridBackgroundEnabled = false
-        
+        graph.backgroundColor = UIColor.whiteColor()
+        graph.centerViewTo(xIndex: Int(self.view.frame.width/2), yValue: self.view.frame.height/2, axis: ChartYAxis.AxisDependency.Right)
         
         
         var xAxis : ChartXAxis = graph.xAxis
@@ -164,16 +195,13 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
         leftAxis.drawAxisLineEnabled = true
         leftAxis.drawGridLinesEnabled = true
         leftAxis.gridLineWidth = 0.3
+        //leftAxis.startAtZeroEnabled = false
 
-        
         var rightAxis : ChartYAxis = graph.rightAxis
         rightAxis.labelFont = UIFont.systemFontOfSize(10)
         rightAxis.drawAxisLineEnabled = true
         rightAxis.drawGridLinesEnabled = false
         rightAxis.enabled = false
-        
-        
-        
         
         graph.legend.position = ChartLegend.ChartLegendPosition.BelowChartLeft
         graph.legend.form = ChartLegend.ChartLegendForm.Square
@@ -182,47 +210,9 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
         graph.legend.xEntrySpace = 4
         graph.legend.enabled = false
         
-        graph.animate(yAxisDuration: 2.5)
+        graph.animate(yAxisDuration: 1)
     }
     
-//    func drawGraph(option:Int){
-//
-//        if(option==0){
-//
-//            var xValues:NSMutableArray = []
-//            var yValues:NSMutableArray = []
-//            for(var i = 0;i<self.graphOverallArr.count;i++){
-//                var day = self.graphOverallArr[i]["day"] as! String
-//                var time = substr((self.graphOverallArr[i]["start_time"] as! String),start: 11,end: 16)
-//                var count: Int! = (self.graphOverallArr[i]["total_attendance_count"] as! String).toInt()
-//                xValues.addObject((day+" "+time))
-//    
-//                yValues.addObject(count)
-//                //self.graphOverallArr[i]["total_attendance_count"]
-//            }
-//            barChart.xLabels = xValues
-//            barChart.yValues = yValues
-//            let totalLectures: Int! = (self.atendeesArr[0]["total_lectures"] as! String).toInt()
-//            barChart.yValueMax = intToCGFloat(totalLectures)
-//        
-//            barChart.strokeChart()
-//        } else if (option==1){
-//            
-//            barChart.xLabels = ["SEP 1","SEP 2","SEP 3","SEP 4","SEP 5","SEP 6","SEP 7"]
-//            barChart.yValues = [1,24,12,18,30,10,21]
-//            barChart.strokeChart()
-//        } else {
-//            
-//            barChart.xLabels = ["SEP 1","SEP 2","SEP 3","SEP 4","SEP 5","SEP 6","SEP 7"]
-//            barChart.yValues = [1,24,12,18,30,10,21]
-//            barChart.strokeChart()
-//            
-//        }
-//        
-//        
-//        
-//    }
-
     func get_attendees() {
         // HTTP Request
         let httpRequest = httpHelper.buildRequest("get_attendees_by_course_id?course_id=\(self.courseId)", method: "GET", authType: HTTPRequestAuthType.HTTPTokenAuth)
@@ -341,6 +331,26 @@ class DetailedDashboardCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var percentageLabel: UILabel!
 }
+
+class TableHeaderViewController {
+    var nib: UINib!
+    var mainView: UIView!
+    
+    var graph: HorizontalBarChartView!
+    var overallBtn: UIButton!
+    var monthBtn: UIButton!
+    var weekBtn: UIButton!
+    
+    init(viewController:UIViewController) {
+        nib = UINib(nibName: "HeaderView", bundle: nil)
+        mainView = nib.instantiateWithOwner(viewController, options: nil)[0] as! UIView
+        graph = mainView.viewWithTag(1) as! HorizontalBarChartView
+        overallBtn = mainView.viewWithTag(2) as! UIButton
+        monthBtn = mainView.viewWithTag(3) as! UIButton
+        weekBtn = mainView.viewWithTag(4) as! UIButton
+    }
+}
+
 
 
 
