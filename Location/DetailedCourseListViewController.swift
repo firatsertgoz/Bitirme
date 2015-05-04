@@ -28,6 +28,10 @@ class DetailedCourseListViewController: UIViewController,UITableViewDelegate {
             updateWeeksLabel()
         }
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

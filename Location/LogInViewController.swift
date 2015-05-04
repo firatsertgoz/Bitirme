@@ -1,7 +1,5 @@
 
-
 import UIKit
-
 
 class LogInViewController: UIViewController {
     
@@ -68,8 +66,6 @@ class LogInViewController: UIViewController {
 
     }
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -96,7 +92,6 @@ class LogInViewController: UIViewController {
                 return
             }
             
-
             // save email and password in Keychain
             //save json to pass it to the next controller
             var jsonData = JSON(data:data)
@@ -107,15 +102,11 @@ class LogInViewController: UIViewController {
                 println("it's nil")
             }
             
-            
             var json = JSON(NSUserDefaults.standardUserDefaults().objectForKey("Schedule") as! NSArray)
-        
             println(json)
-        
         })
     }
 
-    
     func makeSignInRequest(userEmail:String, userPassword:String) {
         // Create HTTP request and set request Body
         let httpRequest = httpHelper.buildRequest("signin", method: "POST",

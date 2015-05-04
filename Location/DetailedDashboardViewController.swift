@@ -12,15 +12,22 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
     
     var names : NSMutableArray = []
     
+    var overallJson: JSON?
+    var monthJson: JSON?
+    var weekJson: JSON?
+    var dayJSON: JSON?
+    
     var atendeesData : JSON?
     var graphDataOverall : JSON?
     var graphDataMonth : JSON?
     var graphDataWeek : JSON?
+    var graphDataDay : JSON?
     
     var atendeesArr : [Dictionary<String, AnyObject>] = []
     var graphOverallArr : [Dictionary<String, AnyObject>] = []
     var graphMonthArr:[Dictionary<String, AnyObject>] = []
     var graphWeekArr : [Dictionary<String, AnyObject>] = []
+    var graphDayArr : [Dictionary<String, AnyObject>] = []
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -29,6 +36,7 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
     var overallBtn: UIButton!
     var monthBtn: UIButton!
     var weekBtn: UIButton!
+    var dayBtn: UIButton!
     
     override func viewWillAppear(animated: Bool) {
         self.navigationItem.title = "Attendance"
@@ -41,7 +49,7 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
         
         println("Term start date:\(self.termStartDate)")
         get_attendees()
-        get_attendance_count_for_graph(0)
+        overallClicked()
     }
     func headerViewSetup(){
         headerCtrl = TableHeaderViewController(viewController:self)
@@ -49,34 +57,67 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
         overallBtn = headerCtrl.overallBtn
         monthBtn = headerCtrl.monthBtn
         weekBtn = headerCtrl.weekBtn
+        dayBtn = headerCtrl.dayBtn
         tableView.tableHeaderView = headerCtrl.mainView
         
         overallBtn.addTarget(self, action: "overallClicked", forControlEvents: UIControlEvents.TouchUpInside)
         monthBtn.addTarget(self, action: "monthClicked", forControlEvents: UIControlEvents.TouchUpInside)
         weekBtn.addTarget(self, action: "weekClicked", forControlEvents: UIControlEvents.TouchUpInside)
+        dayBtn.addTarget(self, action: "dayClicked", forControlEvents: UIControlEvents.TouchUpInside)
     }
     
     func overallClicked(){
+        overallBtn.selected = true
+        monthBtn.selected = false
+        weekBtn.selected = false
+        dayBtn.selected = false
+        
         if(graphOverallArr.count==0){
             get_attendance_count_for_graph(0)
         } else {
             drawGraph(0)
+            tableView.reloadData()
         }
     }
     func monthClicked(){
+        overallBtn.selected = false
+        monthBtn.selected = true
+        weekBtn.selected = false
+        dayBtn.selected = false
         if(graphMonthArr.count==0){
         get_attendance_count_for_graph(1)
         } else {
             drawGraph(1)
+            tableView.reloadData()
         }
     }
     func weekClicked(){
+        overallBtn.selected = false
+        monthBtn.selected = false
+        weekBtn.selected = true
+        dayBtn.selected = false
         println("weekClicked")
         if(graphWeekArr.count==0){
             get_attendance_count_for_graph(2)
         } else {
             drawGraph(2)
+            tableView.reloadData()
         }
+    }
+    
+    func dayClicked(){
+        overallBtn.selected = false
+        monthBtn.selected = false
+        weekBtn.selected = false
+        dayBtn.selected = true
+        println("dayClicked")
+        if(graphDayArr.count==0){
+            get_attendance_count_for_graph(3)
+        } else {
+            drawGraph(3)
+            tableView.reloadData()
+        }
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -91,8 +132,22 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell:DetailedDashboardCell = self.tableView.dequeueReusableCellWithIdentifier("DetailedDashboardCell") as! DetailedDashboardCell
         cell.selectionStyle = .None //don't highlight when selected
-        cell.textLabel?.text = self.atendeesData![indexPath.row]["created_at"].stringValue
-        cell.nameLabel.text? = self.names[indexPath.row] as! String
+        
+        if(overallBtn.selected==true){
+            cell.nameLabel?.text = self.overallJson![indexPath.row]["name"].stringValue
+            cell.percentageLabel?.text = self.overallJson![indexPath.row]["attendance_percentage"].stringValue
+        } else if(monthBtn.selected==true){
+            cell.nameLabel?.text = self.monthJson![indexPath.row]["name"].stringValue
+            cell.percentageLabel?.text = self.monthJson![indexPath.row]["attendance_percentage"].stringValue
+        } else if(weekBtn.selected==true){
+            cell.nameLabel?.text = self.weekJson![indexPath.row]["name"].stringValue
+            cell.percentageLabel?.text = self.weekJson![indexPath.row]["attendance_percentage"].stringValue
+        } else {
+            cell.nameLabel?.text = self.dayJSON![indexPath.row]["name"].stringValue
+            cell.percentageLabel?.text = self.dayJSON![indexPath.row]["attendance_percentage"].stringValue
+        }
+        
+        
         return cell
     }
     
@@ -112,30 +167,37 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
                 println(errorMessage)
             }
             else {
-                
                 var receivedJSON = JSON(data:data)
-                
                 switch (option) {
                 case (0):
                     self.graphDataOverall = receivedJSON
                     self.writeGraphJsonToArrOfDict(receivedJSON, arrDict: &self.graphOverallArr)
                     self.sortArrayByDate(&self.graphOverallArr)
+                    self.get_attendees_by_percentage(0)
                     self.drawGraph(0)
                 case (1):
                     self.graphDataMonth = receivedJSON
                     self.writeGraphJsonToArrOfDict(receivedJSON, arrDict: &self.graphMonthArr)
                     self.sortArrayByDate(&self.graphMonthArr)
+                    self.get_attendees_by_percentage(1)
                     self.drawGraph(1)
                 case (2):
                     self.graphDataWeek = receivedJSON
                     self.writeGraphJsonToArrOfDict(receivedJSON, arrDict: &self.graphWeekArr)
                     self.sortArrayByDate(&self.graphWeekArr)
+                    self.get_attendees_by_percentage(2)
                     self.drawGraph(2)
+                case (3):
+                    self.graphDataDay = receivedJSON
+                    self.writeGraphJsonToArrOfDict(receivedJSON, arrDict: &self.graphDayArr)
+                    self.sortArrayByDate(&self.graphDayArr)
+                    self.get_attendees_by_percentage(3)
+                    self.drawGraph(3)
                 default:
                     println("Option invalid")
                 }
                 println(receivedJSON)
-                self.tableView.reloadData()
+                
             }
         })
     }
@@ -147,6 +209,8 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
             addGraphData(graphMonthArr)
         } else if(option==2){
             addGraphData(graphWeekArr)
+        } else {
+            addGraphData(graphDayArr)
         }
     }
     
@@ -181,7 +245,6 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
         graph.drawGridBackgroundEnabled = false
         graph.backgroundColor = UIColor.whiteColor()
         graph.centerViewTo(xIndex: Int(self.view.frame.width/2), yValue: self.view.frame.height/2, axis: ChartYAxis.AxisDependency.Right)
-        
         
         var xAxis : ChartXAxis = graph.xAxis
         xAxis.labelPosition = ChartXAxis.XAxisLabelPosition.Bottom
@@ -228,12 +291,47 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
             else {
                 self.atendeesData = JSON(data: data)
                 self.writeAtendeesJsonToArrOfDict(self.atendeesData!, arrDict: &self.atendeesArr)
-                println(self.atendeesData)
-                self.rowNumber = self.getRowCount()
+              //  println(self.atendeesData)
+               // self.rowNumber = self.getRowCount()
+             //   self.tableView.reloadData()
+            }
+        })
+    }
+    
+    func get_attendees_by_percentage(option:Int) {
+        // HTTP Request
+        let httpRequest = httpHelper.buildRequest("get_attendees_by_percentage?course_id=\(self.courseId)&option=\(option)", method: "GET", authType: HTTPRequestAuthType.HTTPTokenAuth)
+        //httpRequest.HTTPBody = "{\"course_id\":\"\(self.courseId)\"}".dataUsingEncoding(NSUTF8StringEncoding)
+        httpRequest.HTTPBody = "".dataUsingEncoding(NSUTF8StringEncoding)
+        
+        httpHelper.sendRequest(httpRequest, completion: { (data:NSData!, error:NSError!) -> Void in
+            //display error
+            if error != nil {
+                let errorMessage = self.httpHelper.getErrorMessage(error)
+                println(errorMessage)
+            }
+            else {
+                var json = JSON(data:data)
+                self.rowNumber = json.count
+                println("Inside percentage")
+                println(json)
+                if option == 0 {
+                    self.overallJson = json
+                } else if option == 1 {
+                    self.monthJson = json
+                } else if  option == 2 {
+                    self.weekJson = json
+                } else {
+                    self.dayJSON = json
+                }
+                
+                
+                
                 self.tableView.reloadData()
             }
         })
     }
+
     
     func getRowCount() -> Int {
         var set:Set<String> = Set<String>()
@@ -340,6 +438,7 @@ class TableHeaderViewController {
     var overallBtn: UIButton!
     var monthBtn: UIButton!
     var weekBtn: UIButton!
+    var dayBtn: UIButton!
     
     init(viewController:UIViewController) {
         nib = UINib(nibName: "HeaderView", bundle: nil)
@@ -348,6 +447,7 @@ class TableHeaderViewController {
         overallBtn = mainView.viewWithTag(2) as! UIButton
         monthBtn = mainView.viewWithTag(3) as! UIButton
         weekBtn = mainView.viewWithTag(4) as! UIButton
+        dayBtn = mainView.viewWithTag(5) as! UIButton
     }
 }
 

@@ -21,11 +21,11 @@ class CourseListViewController: UIViewController, UITableViewDelegate,ChartViewD
         println(self.receivedJSON)
 
         tableView.rowHeight = 150
-       // tableView.separatorColor = UIColor.clearColor()
-      //  var refreshControl = UIRefreshControl()
-      //  refreshControl.addTarget(self, action: <#Selector#>, forControlEvents: <#UIControlEvents#>)
+    
         studentImage.image = studentImage.image?.roundCornersToCircle(border: 10, color: UIColor.grayColor())
         greetingLabel.text = "Welcome, "+receivedJSON["first_name"].stringValue
+        
+        
         
     }
    func makeAttendanceRequest(ceId:Int){
@@ -51,7 +51,8 @@ class CourseListViewController: UIViewController, UITableViewDelegate,ChartViewD
     override func viewWillAppear(animated:Bool){
         super.viewWillAppear(animated);
         self.navigationItem.setHidesBackButton(true,animated:false)   //it hides
-        self.navigationItem.title = "Course List"
+       //self.navigationItem.title = "Course List"
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     override func didReceiveMemoryWarning() {
@@ -79,7 +80,7 @@ class CourseListViewController: UIViewController, UITableViewDelegate,ChartViewD
         pie.delegate = self
         pie.usePercentValuesEnabled = true
         pie.holeTransparent = true
-        pie.holeRadiusPercent = 0.5
+        pie.holeRadiusPercent = 0.97
         pie.transparentCircleRadiusPercent = 0.55
         pie.drawHoleEnabled = true
         pie.descriptionText = ""
@@ -92,8 +93,9 @@ class CourseListViewController: UIViewController, UITableViewDelegate,ChartViewD
         colors.addObjectsFromArray(ChartColorTemplates.colorful())
         colors.addObjectsFromArray(ChartColorTemplates.joyful())
         
-        var color:UIColor = ChartColorTemplates.colorful()[3]
-        var color2:UIColor = UIColor(red: 202/255 , green: 30/255, blue: 4/255, alpha: 1)
+       // var color:UIColor = ChartColorTemplates.colorful()[3]
+        var color :UIColor = UIColor(red: 255/255 , green: 3/255, blue: 3/255, alpha: 1)
+        var color2:UIColor = UIColor(red: 206/255 , green: 216/255, blue: 222/255, alpha: 1)
         var c = [color,color2]
         
         pie.centerText = "%"+centerText
@@ -105,7 +107,7 @@ class CourseListViewController: UIViewController, UITableViewDelegate,ChartViewD
         
         var dataSet : PieChartDataSet = PieChartDataSet(yVals: yValues)
         dataSet.drawValuesEnabled = false
-        dataSet.sliceSpace = 2
+        dataSet.sliceSpace = 0
         pie.legend.enabled = false
         var data : ChartData = ChartData(xVals: ["",""], dataSet: dataSet)
         dataSet.colors = c
