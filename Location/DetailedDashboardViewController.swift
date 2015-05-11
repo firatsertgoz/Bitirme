@@ -40,12 +40,14 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
     
     override func viewWillAppear(animated: Bool) {
         self.navigationItem.title = "Attendance"
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         headerViewSetup()
         setGraphSettings()
+        tableView.separatorInset.right = tableView.separatorInset.left
         
         println("Term start date:\(self.termStartDate)")
         get_attendees()
@@ -67,10 +69,10 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
     }
     
     func overallClicked(){
-        overallBtn.selected = true
-        monthBtn.selected = false
-        weekBtn.selected = false
-        dayBtn.selected = false
+        btnSelected(overallBtn,state: true)
+        btnSelected(monthBtn,state: false)
+        btnSelected(weekBtn,state: false)
+        btnSelected(dayBtn,state: false)
         
         if(graphOverallArr.count==0){
             get_attendance_count_for_graph(0)
@@ -80,10 +82,10 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
         }
     }
     func monthClicked(){
-        overallBtn.selected = false
-        monthBtn.selected = true
-        weekBtn.selected = false
-        dayBtn.selected = false
+        btnSelected(overallBtn,state: false)
+        btnSelected(monthBtn,state: true)
+        btnSelected(weekBtn,state: false)
+        btnSelected(dayBtn,state: false)
         if(graphMonthArr.count==0){
         get_attendance_count_for_graph(1)
         } else {
@@ -92,10 +94,10 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
         }
     }
     func weekClicked(){
-        overallBtn.selected = false
-        monthBtn.selected = false
-        weekBtn.selected = true
-        dayBtn.selected = false
+        btnSelected(overallBtn,state: false)
+        btnSelected(monthBtn,state: false)
+        btnSelected(weekBtn,state: true)
+        btnSelected(dayBtn,state: false)
         println("weekClicked")
         if(graphWeekArr.count==0){
             get_attendance_count_for_graph(2)
@@ -106,10 +108,11 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
     }
     
     func dayClicked(){
-        overallBtn.selected = false
-        monthBtn.selected = false
-        weekBtn.selected = false
-        dayBtn.selected = true
+        btnSelected(overallBtn,state: false)
+        btnSelected(monthBtn,state: false)
+        btnSelected(weekBtn,state: false)
+        btnSelected(dayBtn,state: true)
+        
         println("dayClicked")
         if(graphDayArr.count==0){
             get_attendance_count_for_graph(3)
@@ -118,6 +121,16 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
             tableView.reloadData()
         }
         
+    }
+    
+    func btnSelected(btn:UIButton,state:Bool){
+        if(state){ //selected
+            btn.backgroundColor = self.view.tintColor
+            btn.selected = true
+        } else {
+            btn.backgroundColor = UIColor.whiteColor()
+            btn.selected = false
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -135,16 +148,16 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
         
         if(overallBtn.selected==true){
             cell.nameLabel?.text = self.overallJson![indexPath.row]["name"].stringValue
-            cell.percentageLabel?.text = self.overallJson![indexPath.row]["attendance_percentage"].stringValue
+            cell.percentageLabel?.text = "%" + self.overallJson![indexPath.row]["attendance_percentage"].stringValue
         } else if(monthBtn.selected==true){
             cell.nameLabel?.text = self.monthJson![indexPath.row]["name"].stringValue
-            cell.percentageLabel?.text = self.monthJson![indexPath.row]["attendance_percentage"].stringValue
+            cell.percentageLabel?.text = "%" + self.monthJson![indexPath.row]["attendance_percentage"].stringValue
         } else if(weekBtn.selected==true){
             cell.nameLabel?.text = self.weekJson![indexPath.row]["name"].stringValue
-            cell.percentageLabel?.text = self.weekJson![indexPath.row]["attendance_percentage"].stringValue
+            cell.percentageLabel?.text = "%" + self.weekJson![indexPath.row]["attendance_percentage"].stringValue
         } else {
             cell.nameLabel?.text = self.dayJSON![indexPath.row]["name"].stringValue
-            cell.percentageLabel?.text = self.dayJSON![indexPath.row]["attendance_percentage"].stringValue
+            cell.percentageLabel?.text = "%" + self.dayJSON![indexPath.row]["attendance_percentage"].stringValue
         }
         
         
@@ -218,23 +231,33 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
         var xValues  = [String]()
         var yValues = [ChartDataEntry]()
         for(var i = 0;i<arr.count;i++){
-            var x :String = (arr[i]["day"] as! String) + " " + (arr[i]["start_time"] as! String).substr(11,end: 16)
+            var x :String = (arr[i]["day"] as! String).substr(0, end: 3) + " " + (arr[i]["start_time"] as! String).substr(11,end: 16)
             var y : String = (arr[i]["total_attendance_count"] as! String)
             xValues.append(x)
             yValues.append(BarChartDataEntry(value: y.floatValue, xIndex: i))
         }
         var set : BarChartDataSet = BarChartDataSet(yVals:yValues,label:"")
+        if(xValues.count <= 2)
+        {
+            set.barSpace = 0.70
+        }
+        else
+        {
         set.barSpace = 0.35
+        }
+        set.setColor(self.view.tintColor)
         var dataSets  = [BarChartDataSet]()
         dataSets.append(set)
+        var formatter: NSNumberFormatter = NSNumberFormatter()
+        formatter.minimumFractionDigits = 0
         var data : BarChartData = BarChartData(xVals: xValues, dataSets: dataSets)
+        data.setValueFormatter(formatter)
         graph.leftAxis.customAxisMax = arr[0]["total_weeks"]!.floatValue
         graph.data = data
         graph.animate(yAxisDuration: 1)
     }
     
     func setGraphSettings(){
-        
         graph.delegate = self
         graph.descriptionText = ""
         graph.noDataTextDescription = "No data yet"
@@ -250,19 +273,22 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
         xAxis.labelPosition = ChartXAxis.XAxisLabelPosition.Bottom
         xAxis.labelFont = UIFont.systemFontOfSize(10)
         xAxis.drawAxisLineEnabled = true
-        xAxis.drawGridLinesEnabled = true
+        xAxis.drawGridLinesEnabled = false
         xAxis.gridLineWidth = 0.3
         
         var leftAxis : ChartYAxis = graph.leftAxis
         leftAxis.labelFont = UIFont.systemFontOfSize(10)
-        leftAxis.drawAxisLineEnabled = true
+        leftAxis.drawAxisLineEnabled = false
         leftAxis.drawGridLinesEnabled = true
-        leftAxis.gridLineWidth = 0.3
-        //leftAxis.startAtZeroEnabled = false
+        leftAxis.gridLineWidth = 0.5
+        leftAxis.showOnlyMinMaxEnabled = true
+        var formatter: NSNumberFormatter = NSNumberFormatter()
+        formatter.minimumFractionDigits = 0
+        leftAxis.valueFormatter = formatter
 
         var rightAxis : ChartYAxis = graph.rightAxis
         rightAxis.labelFont = UIFont.systemFontOfSize(10)
-        rightAxis.drawAxisLineEnabled = true
+        rightAxis.drawAxisLineEnabled = false
         rightAxis.drawGridLinesEnabled = false
         rightAxis.enabled = false
         
@@ -274,6 +300,8 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
         graph.legend.enabled = false
         
         graph.animate(yAxisDuration: 1)
+        graph.userInteractionEnabled = false
+        
     }
     
     func get_attendees() {
@@ -448,6 +476,28 @@ class TableHeaderViewController {
         monthBtn = mainView.viewWithTag(3) as! UIButton
         weekBtn = mainView.viewWithTag(4) as! UIButton
         dayBtn = mainView.viewWithTag(5) as! UIButton
+        
+        overallBtn.layer.borderWidth = 0.5
+        overallBtn.layer.cornerRadius = 0.5
+        overallBtn.clipsToBounds = true
+        overallBtn.layer.borderColor = viewController.view.tintColor.CGColor
+        overallBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Selected)
+        overallBtn.setTitleColor(viewController.view.tintColor, forState: UIControlState.Normal)
+        monthBtn.layer.borderWidth = 0.5
+        monthBtn.layer.cornerRadius = 0.5
+        monthBtn.layer.borderColor = viewController.view.tintColor.CGColor
+        monthBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Selected)
+        monthBtn.setTitleColor(viewController.view.tintColor, forState: UIControlState.Normal)
+        weekBtn.layer.borderWidth = 0.5
+        weekBtn.layer.cornerRadius = 0.5
+        weekBtn.layer.borderColor = viewController.view.tintColor.CGColor
+        weekBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Selected)
+        weekBtn.setTitleColor(viewController.view.tintColor, forState: UIControlState.Normal)
+        dayBtn.layer.borderWidth = 0.5
+        dayBtn.layer.cornerRadius = 0.5
+        dayBtn.layer.borderColor = viewController.view.tintColor.CGColor
+        dayBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Selected)
+        dayBtn.setTitleColor(viewController.view.tintColor, forState: UIControlState.Normal)
     }
 }
 

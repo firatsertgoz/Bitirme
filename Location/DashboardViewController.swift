@@ -20,8 +20,11 @@ class DashboardViewController: UIViewController,UITableViewDelegate {
     // Disable navigation bar
     override func viewWillAppear(animated:Bool){
     super.viewWillAppear(animated);
-        self.navigationItem.setHidesBackButton(true,animated:false)   //it hides
-        self.navigationItem.title = "Dashboard"
+        //self.navigationController?.setNavigationBarHidden(true, animated: false)
+        self.navigationItem.setHidesBackButton(true,animated:false)   
+        self.navigationItem.title = "Courses"
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
+        
     }
     
     @IBAction func createPressed(sender: AnyObject) {
@@ -34,6 +37,8 @@ class DashboardViewController: UIViewController,UITableViewDelegate {
         // Do any additional setup after loading the view.
         println(self.receivedJSON)
         getCourses()
+        tableView.separatorInset.right = tableView.separatorInset.left
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -49,7 +54,11 @@ class DashboardViewController: UIViewController,UITableViewDelegate {
         
         let cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "InstructorCell") as UITableViewCell
         cell.selectionStyle = .None //don't highlight when selected
+        cell.textLabel?.textAlignment = NSTextAlignment.Center
+        cell.textLabel?.textColor = UIColor.grayColor()
         cell.textLabel?.text = self.json[indexPath.row]["course"]["name"].stringValue
+        
+        
         return cell
     }
 

@@ -10,8 +10,8 @@ class LogInViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     
     @IBAction func loginPressed(sender: AnyObject) {
-        SwiftSpinner.show("Logging in", animated: true)
-        var timer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: Selector("hide"), userInfo: nil, repeats: false)
+      
+//        var timer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: Selector("hide"), userInfo: nil, repeats: false)
         // resign the keyboard for text fields
         if self.emailTextField.isFirstResponder() {
             self.emailTextField.resignFirstResponder()
@@ -27,6 +27,7 @@ class LogInViewController: UIViewController {
         // validate presense of required parameters
         if count(self.emailTextField.text) > 0 &&
             count(self.passwordTextField.text) > 0 {
+                  SwiftSpinner.show("Logging in", animated: true)
                 makeSignInRequest(self.emailTextField.text, userPassword: self.passwordTextField.text)
         } else {
             SwiftSpinner.show("Some of the required parameters are missing", animated: false)
@@ -55,12 +56,15 @@ class LogInViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         
         self.navigationItem.title = "Login"
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
         
         let email =  KeychainAccess.passwordForAccount("email", service: "KeyChainService")
         let password = KeychainAccess.passwordForAccount("password", service: "KeyChainService")
         let auth_token = KeychainAccess.passwordForAccount("Auth_Token", service: "KeyChainService")
         
         if (email != nil && password != nil && auth_token != nil) {
+            SwiftSpinner.show("Logging in", animated: true)
             makeSignInRequest(email!, userPassword: password!)
         }
 
@@ -68,6 +72,8 @@ class LogInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "su.jpg")!)
+        self.passwordTextField.secureTextEntry = true
     }
     
     override func didReceiveMemoryWarning() {
@@ -120,11 +126,12 @@ class LogInViewController: UIViewController {
             if error != nil {
                 let errorMessage = self.httpHelper.getErrorMessage(error)
                 //self.displayAlertMessage("Error", alertDescription: errorMessage)
+                
                 SwiftSpinner.show( errorMessage as String, animated: false)
                 var timer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: Selector("hide"), userInfo: nil, repeats: false)
                 return
             }
-            
+            self.hide()
             var jsonerror:NSError?
             let responseDict = NSJSONSerialization.JSONObjectWithData(data,
                 options: NSJSONReadingOptions.AllowFragments, error:&jsonerror) as! NSDictionary
@@ -180,7 +187,8 @@ class LogInViewController: UIViewController {
         Blesh.sharedInstance().didCloseCampaignView =
             { (NSString valueType, NSString value) -> Void in
                 println("Campaign closed")
-                Attendance.registerBeaconInfo(value)
+                let parsed:[NSString] = value.componentsSeparatedByString(":")
+                Attendance.registerBeaconInfo(parsed[0] as String,count:parsed[1].integerValue)
             }
         
         //check whether the user is a student or an instructor

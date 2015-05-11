@@ -14,8 +14,8 @@ class Attendance {
     static var count : Int = 0
     static let json = JSON(NSUserDefaults.standardUserDefaults().objectForKey("Schedule") as! NSArray)
     
-    class func registerBeaconInfo(location:String){
-        
+    class func registerBeaconInfo(location:String,count:Int){
+        var counter = count
         for (var i=0;i<json.count;i++){
             var courseLoc = json[i]["location"].stringValue
             if( json[i]["day"].stringValue == NSDate.getCurrentDay() &&
@@ -24,10 +24,10 @@ class Attendance {
                     let endTime = json[i]["end_time"].stringValue.getTimeFromDateString()
                     let d = NSDate.getCurrentTime()
                     if (d>startTime && d<=endTime){
-                        println("count: \(count)")
-                        count++
-                        if(count==4*(numOfHours(startTime, time2: endTime))){
-                            count = 0
+                        println("count: \(counter)")
+                        counter++
+                        if(counter==4*(numOfHours(startTime, time2: endTime))){
+                            counter = 0
                             makeAttendanceRequest(json[i]["id"].int!)
                         }
                     }

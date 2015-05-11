@@ -7,10 +7,10 @@ class CourseListViewController: UIViewController, UITableViewDelegate,ChartViewD
     var rowNumber = 0
     var json:JSON = JSON([])
     var selectedCourseId: Int?
+    var selectedPercentage: Int?
+    var selectedCourseName: String?
     var responseDict:NSArray = NSArray()
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var studentImage: UIImageView!
-    @IBOutlet weak var greetingLabel: UILabel!
     var receivedJSON = JSON([])
     
     let httpHelper = HTTPHelper()
@@ -21,12 +21,7 @@ class CourseListViewController: UIViewController, UITableViewDelegate,ChartViewD
         println(self.receivedJSON)
 
         tableView.rowHeight = 150
-    
-        studentImage.image = studentImage.image?.roundCornersToCircle(border: 10, color: UIColor.grayColor())
-        greetingLabel.text = "Welcome, "+receivedJSON["first_name"].stringValue
-        
-        
-        
+
     }
    func makeAttendanceRequest(ceId:Int){
         var httpHelper = HTTPHelper()
@@ -50,7 +45,7 @@ class CourseListViewController: UIViewController, UITableViewDelegate,ChartViewD
     // Disable navigation bar
     override func viewWillAppear(animated:Bool){
         super.viewWillAppear(animated);
-        self.navigationItem.setHidesBackButton(true,animated:false)   //it hides
+        //self.navigationItem.setHidesBackButton(true,animated:false)   //it hides
        //self.navigationItem.title = "Course List"
         self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
@@ -119,6 +114,8 @@ class CourseListViewController: UIViewController, UITableViewDelegate,ChartViewD
         
         let targetView = self.storyboard?.instantiateViewControllerWithIdentifier("DetailedCourseListView") as! DetailedCourseListViewController
         self.selectedCourseId = self.json[indexPath.row]["course"]["id"].int
+        self.selectedCourseName = self.json[indexPath.row]["course"]["name"].stringValue
+        self.selectedPercentage = self.json[indexPath.row]["attendance_percentage"].int
         self.performSegueWithIdentifier("courseListRowSelected", sender: self)
     }
     
@@ -131,6 +128,8 @@ class CourseListViewController: UIViewController, UITableViewDelegate,ChartViewD
         if (segue.identifier == "courseListRowSelected") {
             let destinationView = segue.destinationViewController as! DetailedCourseListViewController
             destinationView.courseId = self.selectedCourseId
+            destinationView.percentage = self.selectedPercentage
+            destinationView.courseName = self.selectedCourseName
         }
     }
     
