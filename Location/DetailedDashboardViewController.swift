@@ -260,7 +260,8 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
     func setGraphSettings(){
         graph.delegate = self
         graph.descriptionText = ""
-        graph.noDataTextDescription = "No data yet"
+        graph.noDataTextDescription = ""
+        graph.noDataText = ""
         graph.drawBarShadowEnabled = true
         graph.drawValueAboveBarEnabled = true
         graph.maxVisibleValueCount = 60

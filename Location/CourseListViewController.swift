@@ -48,6 +48,7 @@ class CourseListViewController: UIViewController, UITableViewDelegate,ChartViewD
         //self.navigationItem.setHidesBackButton(true,animated:false)   //it hides
        //self.navigationItem.title = "Course List"
         self.navigationController?.setNavigationBarHidden(true, animated: false)
+         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
     }
     
     override func didReceiveMemoryWarning() {
@@ -150,6 +151,7 @@ class CourseListViewController: UIViewController, UITableViewDelegate,ChartViewD
                 println(self.json)
                 self.rowNumber = self.json.count
                 self.tableView.reloadData()
+                SwiftSpinner.hide()
             }
         })
     }

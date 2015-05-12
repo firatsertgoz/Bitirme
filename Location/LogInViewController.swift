@@ -131,7 +131,6 @@ class LogInViewController: UIViewController {
                 var timer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: Selector("hide"), userInfo: nil, repeats: false)
                 return
             }
-            self.hide()
             var jsonerror:NSError?
             let responseDict = NSJSONSerialization.JSONObjectWithData(data,
                 options: NSJSONReadingOptions.AllowFragments, error:&jsonerror) as! NSDictionary

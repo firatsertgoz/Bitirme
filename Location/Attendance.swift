@@ -11,11 +11,11 @@ import Foundation
 
 class Attendance {
     
-    static var count : Int = 0
+    //static var count : Int = 0
     static let json = JSON(NSUserDefaults.standardUserDefaults().objectForKey("Schedule") as! NSArray)
-    
+    static var counter = 0
     class func registerBeaconInfo(location:String,count:Int){
-        var counter = count
+        var parameter = count
         for (var i=0;i<json.count;i++){
             var courseLoc = json[i]["location"].stringValue
             if( json[i]["day"].stringValue == NSDate.getCurrentDay() &&
@@ -26,7 +26,7 @@ class Attendance {
                     if (d>startTime && d<=endTime){
                         println("count: \(counter)")
                         counter++
-                        if(counter==4*(numOfHours(startTime, time2: endTime))){
+                        if(counter==parameter*(numOfHours(startTime, time2: endTime))){
                             counter = 0
                             makeAttendanceRequest(json[i]["id"].int!)
                         }
@@ -38,7 +38,7 @@ class Attendance {
     private class func numOfHours(time1:String,time2:String) -> Int {
         let hour1 : Int! = time1.componentsSeparatedByString(":").first?.toInt()
         let hour2 : Int! = time1.componentsSeparatedByString(":").first?.toInt()
-        return hour1 - hour2
+        return hour2-hour1
     }
     
     private class func makeAttendanceRequest(ceId:Int){

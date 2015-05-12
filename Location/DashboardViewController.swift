@@ -38,6 +38,7 @@ class DashboardViewController: UIViewController,UITableViewDelegate {
         println(self.receivedJSON)
         getCourses()
         tableView.separatorInset.right = tableView.separatorInset.left
+        SwiftSpinner.hide()
         
     }
     
