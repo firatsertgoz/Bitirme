@@ -92,6 +92,7 @@ class DashboardViewController: UIViewController,UITableViewDelegate {
         
         let customNav = self.navigationController as! CustomNavigationController
         customNav.DashboardViewController_selectedCourseId = self.selectedCourseId
+        customNav.DetailedDashboardViewController_selectedCourseName = self.json[indexPath.row]["course"]["name"].stringValue
         self.navigationController?.performSegueWithIdentifier("DashboardToDetailed", sender: self)
     }
 }

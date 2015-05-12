@@ -9,6 +9,7 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
     var courseId : Int!
     var GraphOption = 0
     var termStartDate : String!
+    var selectedCourseName: String!
     
     var names : NSMutableArray = []
     
@@ -39,7 +40,7 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
     var dayBtn: UIButton!
     
     override func viewWillAppear(animated: Bool) {
-        self.navigationItem.title = "Attendance"
+        self.navigationItem.title = self.selectedCourseName
         self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
@@ -250,9 +251,10 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
         dataSets.append(set)
         var formatter: NSNumberFormatter = NSNumberFormatter()
         formatter.minimumFractionDigits = 0
+        formatter.numberStyle = NSNumberFormatterStyle.PercentStyle
         var data : BarChartData = BarChartData(xVals: xValues, dataSets: dataSets)
         data.setValueFormatter(formatter)
-        graph.leftAxis.customAxisMax = arr[0]["total_weeks"]!.floatValue
+        graph.leftAxis.customAxisMax = 1//arr[0]["total_weeks"]!.floatValue
         graph.data = data
         graph.animate(yAxisDuration: 1)
     }
@@ -285,7 +287,10 @@ class DetailedDashboardViewController: UIViewController,UITableViewDelegate,UITa
         leftAxis.showOnlyMinMaxEnabled = true
         var formatter: NSNumberFormatter = NSNumberFormatter()
         formatter.minimumFractionDigits = 0
+        formatter.numberStyle = NSNumberFormatterStyle.PercentStyle
+        formatter.percentSymbol = ""
         leftAxis.valueFormatter = formatter
+        
 
         var rightAxis : ChartYAxis = graph.rightAxis
         rightAxis.labelFont = UIFont.systemFontOfSize(10)

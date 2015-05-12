@@ -6,6 +6,7 @@ class CustomNavigationController: UINavigationController {
     var DashboardViewController_selectedCourseId : Int?;
     var CourseListViewController_receivedJSON = JSON([]);
     var DashboardViewController_receivedJSON = JSON([]);
+    var DetailedDashboardViewController_selectedCourseName: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +29,7 @@ class CustomNavigationController: UINavigationController {
             
             let destinationView = segue.destinationViewController as! DetailedDashboardViewController
             destinationView.courseId = DashboardViewController_selectedCourseId
+            destinationView.selectedCourseName = DetailedDashboardViewController_selectedCourseName
         }
             
         else if (segue.identifier == "LoginToCourseList"){
