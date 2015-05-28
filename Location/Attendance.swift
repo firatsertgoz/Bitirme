@@ -45,7 +45,7 @@ class Attendance {
         var httpHelper = HTTPHelper()
         // HTTP Request
         let httpRequest = httpHelper.buildRequest("attend", method: "POST", authType: HTTPRequestAuthType.HTTPTokenAuth)
-        httpRequest.HTTPBody = "{\"course_entity_id\":\"\(ceId)\"\"}".dataUsingEncoding(NSUTF8StringEncoding)
+        httpRequest.HTTPBody = "{\"course_entity_id\":\"\(ceId)\"}".dataUsingEncoding(NSUTF8StringEncoding)
         httpHelper.sendRequest(httpRequest, completion: { (data:NSData!, error:NSError!) -> Void in
             //display error
             if error != nil {
