@@ -173,6 +173,8 @@ class LogInViewController: UIViewController {
     func toTheNextView(){
         
         getCourseEntities()
+        
+        if(self.jsonData!["student"]) {
         //init blesh
         Blesh.sharedInstance().initBleshWithAPIUser(
             "firat.sertgoz",
@@ -189,6 +191,7 @@ class LogInViewController: UIViewController {
                 let parsed:[NSString] = value.componentsSeparatedByString(":")
                 Attendance.registerBeaconInfo(parsed[0] as String,count:parsed[1].integerValue)
             }
+        }
         
         //check whether the user is a student or an instructor
         if (self.jsonData!["instructor"]){

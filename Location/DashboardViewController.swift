@@ -74,6 +74,7 @@ class DashboardViewController: UIViewController,UITableViewDelegate {
                 println(errorMessage)
             }
             else {
+                SwiftSpinner.hide()
                 var jsonerror:NSError?
                 self.json = JSON(data: data)
                 self.rowNumber = self.json.count
